@@ -51,3 +51,54 @@
     document.body.appendChild(bar);
   }
 })();
+
+/* Fork Monday: the first time a polaroid comes into view the camera fires (a flash over the page), the print
+   comes out of the camera from the top, and then it develops */
+(function(){
+  const pols=[...document.querySelectorAll('.fmcat .pol')]; if(!pols.length||!('IntersectionObserver' in window)) return;
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  document.documentElement.classList.add('fmdev');
+  const fl=document.createElement('div'); fl.className='fmflash'; fl.setAttribute('aria-hidden','true'); document.body.appendChild(fl);
+  let last=0;
+  const flash=p=>{ const now=performance.now(); if(now-last<700) return; last=now;   // never more than one flash in quick succession
+    const r=p.getBoundingClientRect(); fl.style.setProperty('--fx',(r.left+r.width/2)+'px'); fl.style.setProperty('--fy',Math.max(0,r.top+r.height*.5)+'px');
+    fl.classList.remove('go'); void fl.offsetWidth; fl.classList.add('go'); };
+  // watch the row, not the print: the print is hidden (clipped) until it comes out, so it can't be seen to intersect
+  const io=new IntersectionObserver(es=>es.forEach(e=>{ if(!e.isIntersecting) return; const p=e.target.querySelector('.pol'); io.unobserve(e.target);
+    flash(p); p.classList.add('is-dev');
+    p.addEventListener('animationend',ev=>{ if(ev.animationName==='fmeject') p.classList.add('is-out'); }); }),{threshold:.6});
+  pols.forEach(p=>io.observe(p.closest('.fmcat__head')||p));
+})();
+
+/* Fork Monday: a hand-drawn gold fork lies across the line where each part of the shop begins
+   (it takes the place of the holiday garland). It is drawn in from the handle to the tines when it comes into view. */
+(function(){
+  const at=['#fm-weddings','#sweets','#gifts','#gifting'];
+  const els=at.map(s=>document.querySelector(s)).filter(Boolean).map(sec=>{
+    const d=document.createElement('div'); d.className='fmfork'; d.setAttribute('aria-hidden','true');
+    d.innerHTML='<img src="assets/img/fm-fork-divider.png" alt="" width="900" height="139" decoding="async">';
+    sec.classList.add('has-fmfork'); sec.prepend(d); return d; });
+  if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion: reduce)').matches){ els.forEach(d=>d.classList.add('is-in')); return; }
+  document.documentElement.classList.add('fmforks');
+  const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('is-in'); io.unobserve(e.target); } }),{threshold:1,rootMargin:'0px 0px -12% 0px'});
+  els.forEach(d=>io.observe(d));
+})();
+
+/* Fork Monday: a date stamp in gold ink on each polaroid, part of the print from the start. Like a real rubber stamp
+   it inks unevenly: a fine grain everywhere, and broader patches where the ink came out pale. */
+(function(){
+  const svg=i=>`<svg viewBox="0 0 168 92"><defs>
+    <filter id="fmdf${i}" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="${i*11+4}" result="patch"/>
+      <feColorMatrix in="patch" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.7 1.72" result="patchA"/>
+      <feTurbulence type="fractalNoise" baseFrequency="1.15" numOctaves="2" seed="${i*5+2}" result="grain"/>
+      <feColorMatrix in="grain" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -.9 1.4" result="grainA"/>
+      <feComposite in="patchA" in2="grainA" operator="in" result="wear"/>
+      <feComposite in="SourceGraphic" in2="wear" operator="in"/></filter></defs>
+    <g filter="url(#fmdf${i})" fill="currentColor">
+      <rect x="2" y="2" width="164" height="88" rx="5" fill="none" stroke="currentColor" stroke-width="2.8"/>
+      <rect x="8" y="8" width="152" height="76" rx="2" fill="none" stroke="currentColor" stroke-width="1.1"/>
+      <text x="84" y="52" text-anchor="middle" font-family="Dahlia,serif" font-size="27.5">Fork Monday</text>
+      <text x="84" y="70" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-weight="700" font-size="8.4" letter-spacing="3.6">30 NOV</text></g></svg>`;
+  document.querySelectorAll('.fmcat .pol').forEach((p,i)=>{ const s=document.createElement('span'); s.className='pol__stamp'; s.setAttribute('aria-hidden','true'); s.innerHTML=svg(i); p.appendChild(s); });
+})();
