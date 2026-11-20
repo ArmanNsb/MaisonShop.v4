@@ -52,3 +52,16 @@
 .fmphoto{position:absolute;max-width:none;display:block;pointer-events:none;user-select:none}
 .fm.photo{-webkit-mask-image:none!important;mask-image:none!important}
 .fmink{position:absolute;display:block;pointer-events:none;overflow:visible}
+/* desktop: the photo itself fades the calendar out at its sides (baked into cal-desktop.jpg); once it is small,
+   only its outer border is softened so the paper runs on into the page with no visible edge (--fmf from fm.js) */
+@media (min-width:901px){
+  .fmphoto,.fmink{
+    -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 calc(5%*var(--fmf,1)),#000 calc(100% - 5%*var(--fmf,1)),transparent 100%),linear-gradient(180deg,transparent 0,#000 calc(6%*var(--fmf,1)),#000 calc(100% - 6%*var(--fmf,1)),transparent 100%);
+    -webkit-mask-composite:source-in;
+    mask-image:linear-gradient(90deg,transparent 0,#000 calc(5%*var(--fmf,1)),#000 calc(100% - 5%*var(--fmf,1)),transparent 100%),linear-gradient(180deg,transparent 0,#000 calc(6%*var(--fmf,1)),#000 calc(100% - 6%*var(--fmf,1)),transparent 100%);
+    mask-composite:intersect}
+}
+@media (min-width:901px){
+  /* behind the small photo: the photo's own paper tone, peach at the top easing into the page's cream, so nothing shows a seam */
+  .fm.photo{background:linear-gradient(180deg,#EFD7C8 0%,#F1DCCF 40%,#F4E5DE 75%,#F5E9E5 92%)}
+}
