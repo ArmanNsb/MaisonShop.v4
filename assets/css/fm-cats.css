@@ -238,3 +238,69 @@
 @media (min-width:901px){
   .fmcat .shead p{font-size:18px;line-height:1.55;max-width:420px;color:#56607A}
 }
+
+/* the polaroids develop: each one starts as a milky blank and the picture comes up through it, faint and warm
+   first, then in full colour, the first time it scrolls into view (fm-cats.js adds .is-dev) */
+.fmdev .pol__photo::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(120% 90% at 40% 35%,#D9DCD6 0%,#C8CCC8 70%,#BFC3C0 100%);opacity:1;
+  transition:opacity 2.6s cubic-bezier(.3,.1,.3,1) .25s}
+.fmdev .pol__photo img{filter:sepia(.55) saturate(.35) contrast(.55) brightness(1.18);
+  transition:filter 4.2s cubic-bezier(.25,.5,.25,1) .5s}
+.fmdev .pol.is-dev .pol__photo::after{opacity:0}
+.fmdev .pol.is-dev .pol__photo img{filter:none}
+@media (prefers-reduced-motion:reduce){.fmdev .pol__photo::after{display:none}.fmdev .pol__photo img{filter:none;transition:none}}
+/* the camera: a flash over the page, the print pushed out from the top in short mechanical steps, then developing */
+.fmflash{position:fixed;inset:0;z-index:250;pointer-events:none;opacity:0;
+  background:radial-gradient(900px 700px at var(--fx,70%) var(--fy,45%),rgba(255,255,255,.97),rgba(255,253,248,.72) 40%,rgba(255,250,242,.38) 100%)}
+.fmflash.go{animation:fmflashpage .55s cubic-bezier(.1,.7,.3,1) both}
+@keyframes fmflashpage{0%{opacity:0}6%{opacity:.9}18%{opacity:.55}100%{opacity:0}}
+.fmdev .fmcat .fmcat__head .pol:not(.is-dev){clip-path:inset(0 0 100% 0);transform:rotate(var(--r)) translateY(-100%)}
+.fmdev .fmcat .fmcat__head .pol.is-dev:not(.is-out){animation:fmeject 1.15s linear .18s both}
+@keyframes fmeject{
+  0%  {clip-path:inset(100% 0 0 0);transform:rotate(var(--r)) translateY(-100%);animation-timing-function:cubic-bezier(.3,.6,.4,1)}
+  32% {clip-path:inset(58% 0 0 0);transform:rotate(var(--r)) translateY(-58%)}
+  40% {clip-path:inset(55% 0 0 0);transform:rotate(var(--r)) translateY(-55%);animation-timing-function:cubic-bezier(.3,.6,.4,1)}
+  82% {clip-path:inset(3% 0 0 0);transform:rotate(var(--r)) translateY(-3%);animation-timing-function:cubic-bezier(.2,.8,.3,1)}
+  100%{clip-path:inset(-60px -60px -60px -60px);transform:rotate(var(--r)) translateY(0)}}
+/* developing waits until the print is out */
+.fmdev .pol__photo::after{transition-delay:1.3s!important}
+.fmdev .pol__photo img{transition-delay:1.55s!important}
+.fmdev .pol::before{display:none}
+
+/* polaroid captions in the brand's font (Dahlia), not a script */
+.fmcat .pol figcaption{font-family:Dahlia,serif;font-size:17px;line-height:1.1;letter-spacing:.01em;color:#5B6680;padding:9px 4px 12px}
+@media (min-width:901px){.fmcat .fmcat__head .pol figcaption{font-size:20px;padding:12px 4px 16px}}
+@media (max-width:900px){.fmcat .fmcat__head .pol figcaption{font-size:18px;padding:9px 2px 12px}}
+
+/* the gold fork across the top line of a section */
+.has-fmfork{position:relative}
+.fmfork{position:absolute;left:calc(var(--gutter) + max(0px, (100% - 2 * var(--gutter) - var(--wrap)) / 2) - 18px);top:0;z-index:3;
+  transform:translateY(-50%);width:230px;padding:0 20px 0 18px;box-sizing:content-box;
+  background:var(--cream,#F5E9E5);pointer-events:none;line-height:0}
+.fmfork img{display:block;width:100%;height:auto}
+.fmforks .fmfork img{clip-path:inset(-10% 100% -10% 0);transform:translateX(-14px);
+  transition:clip-path 1.1s cubic-bezier(.45,.1,.25,1),transform 1.3s cubic-bezier(.2,.7,.2,1)}
+.fmforks .fmfork.is-in img{clip-path:inset(-10% -10% -10% 0);transform:none}
+@media (max-width:900px){.fmfork{width:170px;padding:0 14px 0 12px;left:calc(var(--gutter) - 12px)}}
+
+/* gold: the call to open a category, and the captions on the polaroids */
+.fmcat .fmcat__lbl{color:#A97528}
+.fmcat .pol figcaption{color:#A97528}
+/* phones: room to breathe between the intro and the first category */
+@media (max-width:900px){#fm-weddings{margin-top:56px}}
+@media (min-width:901px){#fm-weddings{margin-top:24px}}
+
+/* the date stamp on each polaroid: gold ink on the white of the frame, running onto the photo */
+.pol__stamp{position:absolute;z-index:3;pointer-events:none;color:#A2701F;right:-7%;bottom:2%;width:40%;
+  transform:rotate(-8deg);opacity:.9}
+.fmcat:nth-of-type(even) .pol__stamp{transform:rotate(6deg)}
+.pol__stamp svg{display:block;width:100%;height:auto;overflow:visible}
+@media (max-width:900px){.fmcat .fmcat__head .pol__stamp{width:30%;right:-4%;bottom:4%}}
+/* the stamp is gold, so the caption under the photo goes back to navy */
+.fmcat .pol figcaption{color:#293A57}
+
+@media (max-width:900px){#sweets.has-fmfork,#gifts.has-fmfork,#gifting.has-fmfork{margin-top:40px}}
+/* captions sit left so the stamp has the right-hand corner of the frame */
+.fmcat .fmcat__head .pol figcaption{text-align:left;padding-left:6%;padding-right:36%;white-space:nowrap}
+@media (min-width:901px){.fmcat .fmcat__head .pol figcaption{font-size:17.5px;padding-left:5%}.fmcat .fmcat__head .pol__stamp{width:37%;right:-8%}}
+@media (max-width:900px){.fmcat .fmcat__head .pol figcaption{padding-left:4%;padding-right:30%}}

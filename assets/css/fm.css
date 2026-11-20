@@ -19,7 +19,23 @@
 .intro.is-intro .fm .later{opacity:1;transition:opacity .9s ease 1.9s}
 /* the message under the strip */
 .fmt{position:absolute;left:24px;right:24px;z-index:4;text-align:center;color:var(--navy);pointer-events:none;opacity:0;transition:opacity .4s ease}
-.intro.is-intro .fmt{opacity:1;transition:opacity 1s ease 1.4s}
+.intro.is-intro .fmt{opacity:1;transition:opacity .5s ease}
+/* the headline waits for "Fork Monday" to be written, then each line comes up out of a soft, warm light:
+   a glow blooms behind it and fades, while the words go from a luminous blur to crisp */
+.fmt p{position:relative}
+.intro.is-intro .fmt p{opacity:0;filter:blur(7px);text-shadow:0 0 18px rgba(255,236,196,1),0 0 34px rgba(255,226,170,.9)}
+.fmt p::before{content:"";position:absolute;left:-18%;right:-18%;top:-70%;bottom:-70%;z-index:-1;pointer-events:none;opacity:0;
+  background:radial-gradient(closest-side,rgba(255,249,234,.95),rgba(255,236,200,.55) 45%,rgba(255,230,190,0) 100%)}
+.intro.is-intro.fm-said .fmt p{animation:fmlit 1.9s cubic-bezier(.25,.6,.3,1) both}
+.intro.is-intro.fm-said .fmt p::before{animation:fmbloom 2.4s ease-out both}
+.intro.is-intro.fm-said .fmt p.v,.intro.is-intro.fm-said .fmt p.v::before{animation-delay:.3s}
+.intro.is-intro.fm-said .fmt p.s,.intro.is-intro.fm-said .fmt p.s::before{animation-delay:.6s}
+@keyframes fmlit{
+  0%  {opacity:0;filter:blur(7px);text-shadow:0 0 18px rgba(255,236,196,1),0 0 34px rgba(255,226,170,.9)}
+  40% {opacity:1;filter:blur(1.5px);text-shadow:0 0 14px rgba(255,240,206,.95),0 0 28px rgba(255,228,176,.6)}
+  100%{opacity:1;filter:blur(0);text-shadow:0 0 0 rgba(255,240,206,0),0 0 0 rgba(255,228,176,0)}}
+@keyframes fmbloom{0%{opacity:0;transform:scale(.6)}35%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.15)}}
+@media (prefers-reduced-motion:reduce){.intro.is-intro .fmt p{opacity:1;filter:none;text-shadow:none;animation:none!important}.fmt p::before{display:none}}
 .fmt .h{text-wrap:balance;margin:0;font:400 clamp(30px,2.7vw,46px)/1.05 Dahlia;color:#293A57}
 .fmt .v{margin:.4em 0 0;font:400 clamp(22px,1.8vw,30px)/1 Dahlia;color:#C98B33}
 .fmt .s{margin:1.1em 0 0;font-size:11px;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:#94692D}
@@ -65,3 +81,4 @@
   /* behind the small photo: the photo's own paper tone, peach at the top easing into the page's cream, so nothing shows a seam */
   .fm.photo{background:linear-gradient(180deg,#EFD7C8 0%,#F1DCCF 40%,#F4E5DE 75%,#F5E9E5 92%)}
 }
+
