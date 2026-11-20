@@ -1,0 +1,54 @@
+/* Fork Monday intro sketch: the holiday pieces are hidden; the paper, window, crest and cupid stay as they are */
+.sheet__tower,.oclip,.orn-sh,.xdeco,.htile,.itext,.halo,.dust{display:none!important}
+.hero{visibility:hidden!important}
+.intro{height:200vh!important}
+/* the calendar strip, lying still under the paper */
+.fm{position:absolute;inset:0;z-index:2;pointer-events:none;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 30%,#000 70%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 30%,#000 70%,transparent 100%)}
+.fm svg{position:absolute;left:0;top:0;overflow:visible}
+.fm .ln{stroke:#293A57;stroke-opacity:.42;stroke-width:1}
+.fm .wd{font-family:Helvetica,Arial,sans-serif;font-weight:500;letter-spacing:.24em;fill:#5B6680}
+.fm .n{font-family:Dahlia;fill:#293A57}
+.fm .mo{font-family:Helvetica,Arial,sans-serif;font-weight:500;letter-spacing:.24em;fill:#5B6680}
+.fm .tag{font-family:Helvetica,Arial,sans-serif;font-weight:500;letter-spacing:.16em;fill:#293A57}
+/* the marker ring around the 30th: drawn once, after the paper has gone */
+.fm .ring{fill:none;stroke:#C98B33;stroke-linecap:round;stroke-opacity:.9;stroke-dasharray:1;stroke-dashoffset:1}
+.intro.is-intro .fm .ring{stroke-dashoffset:0;transition:stroke-dashoffset 1.1s cubic-bezier(.5,0,.25,1) .9s}
+.intro.no-anim .fm .ring{transition:none}
+.fm .later{opacity:0;transition:opacity .3s ease}
+.intro.is-intro .fm .later{opacity:1;transition:opacity .9s ease 1.9s}
+/* the message under the strip */
+.fmt{position:absolute;left:24px;right:24px;z-index:4;text-align:center;color:var(--navy);pointer-events:none;opacity:0;transition:opacity .4s ease}
+.intro.is-intro .fmt{opacity:1;transition:opacity 1s ease 1.4s}
+.fmt .h{text-wrap:balance;margin:0;font:400 clamp(30px,2.7vw,46px)/1.05 Dahlia;color:#293A57}
+.fmt .v{margin:.4em 0 0;font:400 clamp(22px,1.8vw,30px)/1 Dahlia;color:#C98B33}
+.fmt .s{margin:1.1em 0 0;font-size:11px;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:#94692D}
+@media (max-width:900px){.fm{-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 6%,#000 94%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 6%,#000 94%,transparent 100%)}}
+.fm .n30{fill:#C98B33}
+.sv--title .sv-t1{display:block!important}.sv--title .sv-t2{display:none!important}
+@font-face{font-family:"Mrs Saint Delafield";src:url("../fonts/mrs-saint-delafield.woff2") format('woff2');font-display:block}
+.fm .script text{font-family:"Mrs Saint Delafield",cursive;fill:#C98B33}
+/* edit mode */
+.fme{position:absolute;inset:0;z-index:60;pointer-events:none}
+.fmbox{position:absolute;border:1.5px dashed #2F7BF6;background:rgba(47,123,246,.04);cursor:move;pointer-events:auto;touch-action:none}
+.fmbox.sel{border-style:solid;border-width:2px;background:rgba(47,123,246,.08)}
+.fmbox .lab,.fmsun .lab{position:absolute;left:-1px;top:-23px;padding:3px 8px;border-radius:5px 5px 0 0;background:#8DB4F9;color:#fff;font:600 11px/1.3 -apple-system,Helvetica,Arial,sans-serif;white-space:nowrap;letter-spacing:0;text-transform:none}
+.fmbox.sel .lab,.fmsun.sel .lab{background:#2F7BF6}
+.fmbox i{position:absolute;width:12px;height:12px;margin:-6px 0 0 -6px;border:1.5px solid #2F7BF6;background:#fff;border-radius:2px}
+.fmbox i[data-h=nw]{left:0;top:0;cursor:nwse-resize}.fmbox i[data-h=ne]{left:100%;top:0;cursor:nesw-resize}
+.fmbox i[data-h=sw]{left:0;top:100%;cursor:nesw-resize}.fmbox i[data-h=se]{left:100%;top:100%;cursor:nwse-resize}
+.fmbox u{position:absolute;left:50%;top:-30px;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:#fff;border:2px solid #2F7BF6;cursor:grab}
+.fmbox u::after{content:"";position:absolute;left:50%;top:12px;width:1.5px;height:16px;margin-left:-.75px;background:#2F7BF6}
+.fmbox .lab{top:auto;bottom:-23px;border-radius:0 0 5px 5px}
+.fmsun{position:absolute;width:30px;height:30px;margin:-15px 0 0 -15px;border-radius:50%;background:radial-gradient(circle,#FFD9A0 0 40%,#F2A54A 41% 60%,rgba(242,165,74,.25) 61%);box-shadow:0 0 0 2px #fff,0 0 0 3.5px #2F7BF6;cursor:grab;pointer-events:auto;touch-action:none}
+.fmsun.sel{box-shadow:0 0 0 2px #fff,0 0 0 4px #2F7BF6,0 0 18px rgba(242,165,74,.8)}
+.fmsun .lab{left:50%;transform:translateX(-50%);top:-24px;border-radius:5px}
+.fmray{position:absolute;height:0;border-top:1.5px dashed rgba(242,140,40,.9);transform-origin:0 0;pointer-events:none}
+.fmt p{display:table;margin-left:auto!important;margin-right:auto!important}
+.fmbar{transition:none}
+.fm .ring{opacity:0}.intro.is-intro .fm .ring{opacity:1}
+.fmt .mbr{display:none}
+@media (max-width:900px){.fmt{text-align:left}.fmt .h{text-wrap:wrap}.fmt .mbr{display:inline}}
+.fmphoto{position:absolute;max-width:none;display:block;pointer-events:none;user-select:none}
+.fm.photo{-webkit-mask-image:none!important;mask-image:none!important}
+.fmink{position:absolute;display:block;pointer-events:none;overflow:visible}

@@ -1,0 +1,240 @@
+/* Fork Monday: the new categories. Closed: the shop's own section header with a polaroid beside it.
+   Open: a quiet list of the offers below, each with its price, spots and seal. */
+.fmcat{padding-top:52px;padding-bottom:52px}
+.fmcat + .section:not(.fmcat){border-top:1px solid var(--line)}
+.fmcat__head{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:40px}
+.fmcat .shead h2{font-size:48px}
+.fmcat .shead p{max-width:340px;font-size:14.5px}
+.fmcat .shead__rule{margin:16px 0 12px}
+.fmcat__toggle{all:unset;cursor:pointer;color:inherit;transition:color .3s}
+.fmcat__toggle:hover{color:var(--riviera)}
+.fmcat__toggle:focus-visible,.fmcat__open:focus-visible{outline:2px solid var(--riviera);outline-offset:4px;border-radius:2px}
+.fmcat__open{display:inline-flex;align-items:center;gap:12px;margin-top:14px;padding:0;border:0;background:none;cursor:pointer;
+  font:500 11px/1 var(--text);letter-spacing:.24em;text-transform:uppercase;color:var(--navy)}
+.fmcat__lbl .c{display:none}
+.fmcat.is-open .fmcat__lbl .o{display:none}.fmcat.is-open .fmcat__lbl .c{display:inline}
+.fmcat__seal{width:40px;height:40px;background:url("../img/emboss-plus.png") center/40px 40px no-repeat;transition:transform .5s cubic-bezier(.3,.7,.2,1),filter .3s}
+.fmcat__open:hover .fmcat__seal{filter:contrast(1.25)}
+.fmcat.is-open .fmcat__seal{transform:rotate(45deg)}
+
+/* the polaroid */
+.pol{--r:-3deg;margin:0 24px 0 0;width:178px;padding:9px 9px 0;background:#FDFBF8;cursor:pointer;
+  box-shadow:0 1px 1px rgba(41,58,87,.06),0 10px 24px -8px rgba(41,58,87,.22);transform:rotate(var(--r));
+  transition:transform .6s cubic-bezier(.2,.7,.2,1),box-shadow .6s ease}
+.fmcat:nth-of-type(even) .pol{--r:2.4deg}
+.fmcat__head:hover .pol{transform:rotate(calc(var(--r) * .3)) translateY(-4px);box-shadow:0 1px 1px rgba(41,58,87,.06),0 18px 30px -10px rgba(41,58,87,.26)}
+.pol__photo{position:relative;display:block;aspect-ratio:1;overflow:hidden;background:#E8DAD3}
+.pol__photo>img,.pol__photo>picture>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pol__ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;background:radial-gradient(120% 90% at 50% 40%,#F1E6E1 0,#E3D3CB 100%)}
+.pol__ph img{width:54px;height:54px;opacity:.55}
+.pol__ph span{font-size:8.5px;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:#9A8F96}
+.pol figcaption{padding:8px 4px 11px;text-align:center;font-family:"Mrs Saint Delafield",cursive;font-size:22px;line-height:1;color:#5B6680}
+
+/* open: the list of offers */
+.fmcat__body{overflow:hidden}
+.fmcat.is-open .fmcat__body{padding-top:44px}
+.olist{margin:0;padding:0;list-style:none;border-top:1px solid var(--line)}
+.orow{display:grid!important;grid-template-columns:minmax(0,1fr) 150px 300px;align-items:center;gap:24px;height:auto!important;
+  padding:22px 4px;background:none!important;border-bottom:1px solid var(--line)}
+.orow .card__name{font-size:12.5px}
+.orow__sub{margin:5px 0 0;display:flex;align-items:center;gap:10px;font-size:14px;font-weight:300;color:var(--muted)}
+.orow__sub .pick{margin-right:0}
+.orow__credit{display:inline-block;padding:3px 7px 2px;border:1px solid rgba(201,139,51,.55);border-radius:2px;font-size:9.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--ochre-deep);line-height:1}
+.orow__detail{margin:6px 0 0;font-size:14px;line-height:1.5;font-weight:300;color:#4E5A73}
+.ocard__spots{display:flex;align-items:center;gap:9px;margin:0;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--ochre-deep);white-space:nowrap}
+.ocard__pips{display:inline-flex;gap:4px}
+.ocard__pips i{width:6px;height:6px;border-radius:50%;background:var(--ochre-deep)}
+.ocard__pips i.gone{background:none;box-shadow:inset 0 0 0 1px rgba(201,139,51,.55)}
+.orow__buy{display:flex;align-items:center;justify-content:flex-end;gap:18px}
+.orow__price{display:flex;align-items:baseline;gap:14px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.orow__price s{position:relative;display:inline-block;text-decoration:none;font-family:var(--display);font-size:20px;line-height:1;color:#7E869B}
+/* the old price is struck by hand, in the same gold marker as the ring on the calendar */
+.orow__price s::after{content:"";position:absolute;left:-7%;right:-7%;top:50%;height:.5em;margin-top:-.2em;
+  background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%2020%22%20preserveAspectRatio%3D%22none%22%3E%3Cpath%20d%3D%22M2%2012.6%20C%2020%2011.6%2C%2040%2011.9%2C%2056%2010.4%20S%2086%208.9%2C%2098%208.1%22%20fill%3D%22none%22%20stroke%3D%22%23C98B33%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20vector-effect%3D%22non-scaling-stroke%22%20opacity%3D%22.9%22/%3E%3Cpath%20d%3D%22M34%2011.6%20C%2052%2010.4%2C%2072%209.6%2C%2092%208.6%22%20fill%3D%22none%22%20stroke%3D%22%23C98B33%22%20stroke-width%3D%22.8%22%20stroke-linecap%3D%22round%22%20vector-effect%3D%22non-scaling-stroke%22%20opacity%3D%22.3%22/%3E%3C/svg%3E") center/100% 100% no-repeat;clip-path:inset(0 100% 0 0);transition:clip-path .2s ease}
+.fmcat.is-open .orow__price s::after{clip-path:inset(0 0 0 0);transition:clip-path .5s cubic-bezier(.55,0,.35,1) calc(.45s + var(--i,0) * .09s)}
+.orow__price b{font-family:var(--display);font-weight:400;font-size:26px;line-height:1;color:var(--navy)}
+.orow__price--tbc{font-family:var(--display);font-size:16px;color:#8C93A6}
+.orow .buy{min-width:44px;display:flex;justify-content:flex-end}
+.ocard__sold{display:none;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.olist__note{display:flex;align-items:center;gap:10px;margin:16px 4px 0;font-size:12.5px;font-weight:300;color:#7A8296}
+/* sold out at this price */
+.orow.is-sold .orow__what,.orow.is-sold .orow__price{opacity:.5}
+.orow.is-sold .buy,.orow.is-sold .ocard__spots{display:none}
+.orow.is-sold .ocard__sold{display:inline}
+.orow.is-sold{grid-template-columns:minmax(0,1fr) 300px}
+.ocard.is-full .qty__btn[data-step="1"]{opacity:.3;pointer-events:none}
+
+@media (max-width:1100px){ .orow{grid-template-columns:minmax(0,1fr) 260px} .orow .ocard__spots{grid-column:1;grid-row:2;margin-top:-10px} .orow__buy{grid-column:2;grid-row:1/3} }
+@media (max-width:900px){
+  .fmcat{padding-top:30px;padding-bottom:30px}
+  .fmcat__head{grid-template-columns:minmax(0,1fr) 92px;gap:14px;align-items:start}
+  .fmcat .shead__eyebrow{font-size:11px;letter-spacing:.2em;white-space:nowrap}
+  .fmcat .shead h2{margin-top:10px;font-size:31px;line-height:1.05}
+  .fmcat .shead__rule{margin:12px 0 10px}
+  .fmcat .shead p{font-size:15px;line-height:1.5}
+  .fmcat__open{margin-top:10px;font-size:12px;letter-spacing:.2em;min-height:44px}
+  .fmcat__seal{width:36px;height:36px;background-size:36px 36px}
+  .pol{width:92px;margin:4px 2px 0 0;padding:6px 6px 0}
+  .pol figcaption{font-size:14px;padding:5px 1px 7px;white-space:nowrap;overflow:hidden}
+  .pol__ph img{width:28px;height:28px}.pol__ph span{display:none}
+  .fmcat.is-open .fmcat__body{padding-top:20px}
+  .orow{grid-template-columns:minmax(0,1fr) auto;gap:12px 14px;padding:20px 2px}
+  .orow__what{grid-column:1/3}
+  .orow .card__name{font-size:13.5px;letter-spacing:.08em}
+  .orow__sub{font-size:14.5px;flex-wrap:wrap;gap:8px}
+  .orow__credit{font-size:10px}
+  .orow__detail{font-size:15px}
+  .orow .ocard__spots{grid-column:1;grid-row:2;margin:0;font-size:11.5px;letter-spacing:.14em}
+  .orow__buy{grid-column:2;grid-row:2;gap:12px}
+  .orow__price{gap:10px}
+  .orow__price b{font-size:23px}
+  .orow__price s{font-size:18px}
+  .orow__price--tbc{font-size:16px}
+  .orow.is-sold{grid-template-columns:minmax(0,1fr) auto}
+  .ocard__sold{font-size:11.5px}
+  .olist__note{align-items:flex-start;font-size:13px;line-height:1.5}
+}
+/* the end of an open list: a way to close it without going back up */
+.fmcat__end{display:flex;justify-content:flex-end;margin-top:18px}
+.fmcat__end .fmcat__open{margin-top:0}
+.fmcat__end .fmcat__seal{transform:rotate(45deg)}
+@media (prefers-reduced-motion:reduce){.pol,.fmcat__seal{transition:none}}
+/* review only: card states */
+.fmstates{position:fixed;left:14px;bottom:14px;z-index:300;display:flex;gap:4px;padding:4px;border-radius:20px;background:rgba(255,255,255,.95);box-shadow:0 2px 12px rgba(41,58,87,.2);font:500 12px Helvetica,Arial,sans-serif}
+.fmstates span{padding:7px 8px 0;color:#5B6680}.fmstates button{border:0;border-radius:16px;padding:7px 12px;background:none;color:#293A57;font:inherit;cursor:pointer}
+.fmstates button[aria-pressed=true]{background:#293A57;color:#fff}
+@media (prefers-reduced-motion:reduce){.orow__price s::after{transition:none!important}}
+/* credits: what you pay, what you get */
+.orow--credit{grid-template-columns:minmax(0,1fr) 130px 410px}
+.orow__deal{display:grid;grid-template-columns:auto auto;column-gap:16px;row-gap:9px;align-items:baseline;justify-content:end}
+.orow__k{font-size:10px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);text-align:right}
+.orow__deal .orow__price{justify-content:flex-start}
+.orow__get{display:flex;align-items:baseline;gap:7px;white-space:nowrap;font-size:13.5px;font-weight:300;color:var(--muted)}
+.orow__get b{font-family:var(--display);font-weight:400;font-size:20px;line-height:1;color:var(--navy)}
+.orow__gift{margin-left:8px;font-family:"Mrs Saint Delafield",cursive;font-style:normal;font-size:25px;line-height:.8;color:#C98B33;transform:rotate(-5deg) translateY(2px);display:inline-block}
+/* how a credit works */
+.ohow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;margin:0 0 26px;padding:0 4px;list-style:none;counter-reset:none}
+.ohow li{display:flex;align-items:baseline;gap:12px;font-size:14px;line-height:1.5;font-weight:300;color:#4E5A73}
+.ohow b{flex:none;font-family:var(--display);font-weight:400;font-size:24px;line-height:1;color:var(--ochre-deep)}
+@media (max-width:1100px){ .orow--credit{grid-template-columns:minmax(0,1fr) 380px} }
+@media (max-width:900px){
+  .ohow{grid-template-columns:1fr;gap:10px;margin-bottom:20px}
+  .ohow li{font-size:15px}
+  .ohow b{font-size:22px;width:16px}
+  .orow--credit{grid-template-columns:minmax(0,1fr) auto}
+  .orow--credit .orow__buy{grid-column:1/3;grid-row:3;justify-content:space-between;align-items:flex-end}
+  .orow--credit .ocard__spots{grid-column:1/3;grid-row:2}
+  .orow__deal{justify-content:start;row-gap:8px}
+  .orow__k{text-align:left;font-size:11px}
+  .orow__get{font-size:14.5px}.orow__get b{font-size:21px}
+  .orow__gift{font-size:24px}
+}
+.orow .card:hover .add__label,.orow:hover .add__label{max-width:140px}
+.orow__buy .add__label{white-space:nowrap}
+.orow__k{white-space:nowrap}
+/* in the list the seal stays a seal: its words are in its label for screen readers, no hover text to push the prices */
+.orow .add__label{display:none!important}
+/* the pay/get columns line up from row to row */
+.orow__deal{grid-template-columns:64px auto;justify-content:start;width:330px}
+@media (max-width:900px){ .orow__deal{width:auto;grid-template-columns:64px auto} }
+/* phones: the polaroid under the title, large, still a polaroid (not a banner) */
+@media (max-width:900px){
+  .fmcat__head{display:flex;flex-direction:column;align-items:stretch;gap:0}
+  .fmcat__head .shead{display:contents}
+  .fmcat .shead__eyebrow{order:1}
+  .fmcat .shead h2{order:2}
+  .fmcat__head .pol{order:3;align-self:center;width:72%;max-width:300px;margin:22px 0 26px;padding:10px 10px 0}
+  .fmcat .shead__rule{order:4;margin-top:0}
+  .fmcat .shead p{order:5;max-width:none}
+  .fmcat .fmcat__open{order:6}
+  .pol figcaption{font-size:24px;padding:8px 2px 12px}
+  .pol__ph img{width:52px;height:52px}.pol__ph span{display:block;font-size:9px}
+  .fmcat{padding-top:36px;padding-bottom:34px}
+}
+@media (max-width:900px){ .fmcat .shead p.shead__eyebrow{order:1} }
+/* what you get as large as what you pay; the gift a handwritten note under it */
+@font-face{font-family:"Ephesis";src:url("../fonts/ephesis.woff2") format('woff2');font-display:swap}
+.orow__get b{font-size:26px}
+.orow__gift{grid-column:2;justify-self:start;margin:2px 0 0 2px;font-family:"Ephesis",cursive;font-style:normal;font-size:27px;line-height:1;color:#B98234;transform:rotate(-3deg);transform-origin:0 50%}
+@media (max-width:900px){ .orow__get b{font-size:23px} .orow__gift{font-size:25px} }
+/* phones, after a legibility pass: body at 16–17px (KoHo Light is thin, so a touch larger and one weight up),
+   nothing under 12px, and the offer in its own panel so the row reads in three clear groups:
+   what it is, what it is like, what it costs */
+@media (max-width:900px){
+  .fmcat .shead p.shead__eyebrow{font-size:12px;letter-spacing:.18em}
+  .fmcat .shead p{font-size:16.5px;line-height:1.55;font-weight:400;color:#56607A}
+  .fmcat__open{font-size:12.5px}
+  .ohow{gap:14px;margin-bottom:24px}
+  .ohow li{font-size:16.5px;line-height:1.5;font-weight:400;color:#4E5A73}
+  .ohow b{font-size:24px}
+  .orow{padding:30px 2px 28px;gap:0 14px}
+  .orow .card__name{font-size:15px;letter-spacing:.07em;line-height:1.35}
+  .orow__sub{margin-top:6px;font-size:16px;font-weight:400}
+  .orow__detail{margin-top:10px;font-size:16.5px;line-height:1.55;font-weight:400;color:#4E5A73}
+  /* the offer panel */
+  .orow .ocard__spots,.orow--credit .ocard__spots{grid-column:1/3;grid-row:2;margin:18px 0 0;padding:14px 16px 0;background:#FAF4F1;font-size:12.5px;letter-spacing:.14em}
+  .orow__buy,.orow--credit .orow__buy{grid-column:1/3;grid-row:3;display:flex;justify-content:space-between;align-items:center;margin:0;padding:12px 16px 16px;background:#FAF4F1}
+  .ocard__pips i{width:7px;height:7px}
+  .orow__deal{grid-template-columns:70px auto;row-gap:8px}
+  .orow__k{font-size:12px;letter-spacing:.16em}
+  .orow__price b,.orow__get b{font-size:24px}
+  .orow__get{font-size:15px}
+  .orow__gift{font-size:27px;margin-top:4px}
+  .orow__price s{font-size:19px}
+  .orow__price--tbc{font-size:18px}
+  .ocard__sold{font-size:12.5px}
+  .orow.is-sold .ocard__spots{display:none}
+  .orow.is-sold .orow__buy{grid-row:2;margin-top:18px;padding-top:16px}
+  .orow__sub .pick__btn{font-size:16px}
+}
+/* in the house's own type: "credit" in Dahlia beside the amount; the gift in gold Dahlia with small capitals */
+.orow__get{gap:9px}
+.orow__cr{font-family:var(--display);font-size:22px;line-height:1;color:var(--navy)}
+.orow__gift{font-family:var(--text)!important;font-style:normal;font-size:10.5px!important;font-weight:500;letter-spacing:.24em;text-transform:uppercase;line-height:1!important;
+  color:var(--ochre-deep)!important;transform:none!important;margin:3px 0 0!important;display:inline-flex!important;align-items:baseline;gap:8px}
+.orow__gift b{font-family:var(--display);font-weight:400;font-size:21px;letter-spacing:0;text-transform:none;color:var(--ochre-deep)}
+@media (max-width:900px){ .orow__cr{font-size:20px} .orow__gift{font-size:11.5px!important} .orow__gift b{font-size:20px} }
+/* how a credit works: on desktop above the list; on phones after the items, so a tap shows the offers first */
+.ohow__h{display:none}
+@media (max-width:900px){
+  .fmcat.is-open .fmcat__body{display:flex;flex-direction:column}
+  .fmcat__body .olist{order:1}
+  .fmcat__body .ohowbox{order:2;margin-top:26px;padding:20px 18px 6px;background:#FAF4F1}
+  .fmcat__body .fmcat__end{order:3}
+  .ohow__h{display:block;margin:0 0 14px;font-size:12px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--ochre-deep)}
+  .ohowbox .ohow{margin-bottom:14px}
+  .ohowbox .ohow li{font-size:15.5px}
+  .ohowbox .ohow b{font-size:21px}
+}
+/* phones: a wide polaroid (Instax Wide proportions), almost the full width, a lighter tilt; the rule goes,
+   the photo already separates the title from the text */
+@media (max-width:900px){
+  .fmcat__head .pol{width:calc(100% - 14px);max-width:440px;margin:18px 0 20px;padding:9px 9px 0;--r:-1.4deg}
+  .fmcat:nth-of-type(even) .fmcat__head .pol{--r:1.2deg}
+  .fmcat__head .pol .pol__photo{aspect-ratio:3/2}
+  .pol figcaption{font-size:22px;padding:7px 2px 10px}
+  .fmcat .shead__rule{display:none}
+}
+
+/* desktop polaroids ~30% larger */
+@media (min-width:901px){
+  .fmcat__head .pol{width:232px;padding:11px 11px 0}
+  .fmcat__head .pol figcaption{font-size:27px;padding:10px 4px 14px}
+}
+
+/* desktop: large polaroids in one straight column. Each sits inside its own row at the top and crosses only
+   the line below it; the next polaroid starts well below that line, so photos never overlap each other. */
+@media (min-width:901px){
+  .fmcat__head{min-height:249px;align-items:center;transition:margin-bottom .45s cubic-bezier(.2,.7,.2,1)}
+  .fmcat__head .pol,
+  .fmcat:nth-of-type(odd) .fmcat__head .pol,
+  .fmcat:nth-of-type(even) .fmcat__head .pol{width:272px;padding:12px 12px 0;margin:4px 10px var(--pol-mb,-76px) 0;
+    align-self:start;position:relative;z-index:3}
+  .fmcat:nth-of-type(odd) .fmcat__head .pol{--r:-1.6deg}
+  .fmcat:nth-of-type(even) .fmcat__head .pol{--r:1.4deg}
+  .fmcat__head .pol figcaption{font-size:28px;padding:11px 4px 16px}
+  .fmcat.is-open .fmcat__head{margin-bottom:40px}
+}
+@media (min-width:901px){
+  .fmcat .shead p{font-size:18px;line-height:1.55;max-width:420px;color:#56607A}
+}

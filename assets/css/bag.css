@@ -1,0 +1,142 @@
+/* Maison De La Fork, the bag drawer (every page; assets/js/bag.js builds it)
+   Paper from the right: a hairline edge, a soft shadow, the title set in Dahlia. Opens on hover over the bag (a peek that
+   closes again when the pointer leaves), on a click (it stays until closed), and when something new is added. */
+
+.bd{position:fixed;inset:0;z-index:1000;pointer-events:none;visibility:hidden;transition:visibility 0s linear .7s}
+.bd.is-open{pointer-events:auto;visibility:visible;transition:none}
+.bd.is-peek{pointer-events:none}
+.bd.is-peek .bd__panel{pointer-events:auto}
+
+.bd__veil{position:absolute;inset:0;opacity:0;transition:opacity .6s cubic-bezier(.4,0,.2,1);will-change:opacity;
+  /* the room dims: a warm navy shade, no blur, so the page stays sharp and simply steps back; a touch deeper toward the drawer */
+  background:linear-gradient(90deg,rgba(33,44,66,.30) 0%,rgba(33,44,66,.36) 60%,rgba(33,44,66,.44) 100%)}
+.bd.is-open .bd__veil{opacity:1;transition:opacity .8s cubic-bezier(.22,.7,.2,1)}
+/* a peek (hover, or after adding) dims only lightly */
+.bd.is-peek .bd__veil{opacity:.45}
+
+.bd__panel{position:absolute;top:0;right:0;bottom:0;width:min(440px,100vw);display:flex;flex-direction:column;will-change:transform;
+  background:var(--paper,#FAF5F2);border-left:1px solid var(--line,#DCCBC5);
+  box-shadow:-24px 0 60px rgba(41,58,87,.14),-2px 0 10px rgba(41,58,87,.05);
+  transform:translateX(104%);transition:transform .6s cubic-bezier(.55,0,.25,1),box-shadow .6s ease;outline:none;color:var(--navy,#293A57)}
+.bd.is-open .bd__panel{transform:none;transition:transform .9s cubic-bezier(.16,1,.3,1),box-shadow .9s ease}
+/* the head and foot settle a beat after the paper */
+.bd__head,.bd__foot{transition:opacity .3s ease,transform .3s ease}
+.bd:not(.is-open) .bd__head,.bd:not(.is-open) .bd__foot{opacity:0;transform:translateX(14px)}
+.bd.is-open .bd__head,.bd.is-open .bd__foot{transition:opacity .7s ease .18s,transform .9s cubic-bezier(.16,1,.3,1) .18s}
+/* a fine ochre rule along the inner edge, drawn as the paper arrives */
+.bd__panel::before{content:"";position:absolute;left:-1px;top:0;bottom:0;width:1px;background:var(--ochre,#E0A450);transform:scaleY(0);transform-origin:50% 0;
+  transition:transform .3s ease}
+.bd.is-open .bd__panel::before{transform:scaleY(1);transition:transform 1.1s cubic-bezier(.2,.7,.1,1) .25s}
+
+/* head */
+.bd__head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;padding:30px 30px 20px;border-bottom:1px solid var(--line,#DCCBC5)}
+.bd__eyebrow{margin:0 0 9px;font-size:10px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--ochre-deep,#C98B33)}
+.bd__eyebrow i{font-style:normal;margin-right:8px}
+.bd__title{margin:0;font-family:var(--display,'Dahlia',Georgia,serif);font-weight:400;font-size:34px;line-height:1}
+.bd__count{display:inline-block;margin-left:10px;font-family:var(--text,'KoHo',sans-serif);font-size:12px;letter-spacing:.06em;color:var(--muted,#5B6680);vertical-align:.45em}
+.bd__close{position:relative;flex:none;width:40px;height:40px;margin:-6px -8px 0 0;border:1px solid transparent;border-radius:50%;background:none;color:var(--navy,#293A57);
+  cursor:pointer;display:grid;place-items:center;transition:border-color .3s ease,transform .5s cubic-bezier(.3,1.4,.5,1)}
+.bd__close:hover{border-color:var(--line,#DCCBC5);transform:rotate(90deg)}
+.bd__close:focus-visible{outline:2px solid var(--riviera,#5B7FAE);outline-offset:2px}
+
+/* lines */
+.bd__body{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:0 30px}
+.bd__list{list-style:none;margin:0;padding:0}
+.bdl{position:relative;display:grid;grid-template-columns:84px minmax(0,1fr) auto;gap:0 18px;padding:22px 0;border-bottom:1px solid var(--line,#DCCBC5);
+  transition:height .45s cubic-bezier(.4,0,.2,1),padding .45s cubic-bezier(.4,0,.2,1),opacity .3s ease,transform .45s ease}
+.bdl:last-child{border-bottom:0}
+.bdl__img{display:block;width:84px;height:84px;overflow:hidden;background:#ECDFD8}
+.bdl__img img{display:block;width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.7,.1,1)}
+.bdl__img:hover img{transform:scale(1.05)}
+.bdl__main{min-width:0;display:flex;flex-direction:column}
+.bdl__name{font-size:12.5px;font-weight:600;line-height:1.35;letter-spacing:.1em;text-transform:uppercase;color:var(--navy,#293A57);text-decoration:none;transition:color .3s}
+.bdl__name:hover{color:var(--riviera,#5B7FAE)}
+.bdl__opt{margin:5px 0 0;font-size:13px;font-weight:300;color:var(--muted,#5B6680)}
+.bdl__row{display:flex;align-items:center;gap:16px;margin-top:auto;padding-top:12px}
+.bdl__qty{display:inline-flex;align-items:center;height:32px;border:1px solid var(--line,#DCCBC5);border-radius:16px}
+.bdl__qty button{position:relative;width:30px;height:30px;border:0;background:none;color:var(--navy,#293A57);cursor:pointer;display:grid;place-items:center;border-radius:50%;
+  transition:background .25s ease}
+.bdl__qty button::before{content:"";position:absolute;inset:-6px -2px}
+.bdl__qty button:hover{background:rgba(41,58,87,.06)}
+.bdl__qty button:disabled{opacity:.3;cursor:default;background:none}
+.bdl__n{min-width:22px;text-align:center;font-size:13px;font-weight:500;font-variant-numeric:tabular-nums}
+.bdl__rm{position:relative;padding:0;border:0;background:none;font:inherit;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted,#5B6680);cursor:pointer;
+  border-bottom:1px solid transparent;transition:color .25s,border-color .25s}
+.bdl__rm::before{content:"";position:absolute;inset:-12px -6px}
+.bdl__rm:hover{color:var(--navy,#293A57);border-bottom-color:var(--ochre,#E0A450)}
+.bdl__price{font-size:15px;font-weight:500;letter-spacing:.01em;font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right}
+.bdl__price small{display:block;margin-top:4px;font-size:11.5px;font-weight:300;color:var(--muted,#5B6680)}
+.bdl__price.is-tbc{font-size:12px;font-weight:400;color:var(--muted,#5B6680)}
+.bdl :focus-visible{outline:2px solid var(--riviera,#5B7FAE);outline-offset:2px}
+
+/* lines arrive one after another as the drawer opens */
+.bd.is-open:not(.no-stagger) .bdl{animation:bdlIn .9s cubic-bezier(.16,1,.3,1) both;animation-delay:calc(.26s + var(--i,0) * .07s)}
+@keyframes bdlIn{from{opacity:0;transform:translate(16px,6px)}to{opacity:1;transform:none}}
+/* the line just added: a warm wash that fades, and its count presses in like the seal */
+.bdl.is-new::after{content:"";position:absolute;inset:0 -30px;background:linear-gradient(90deg,rgba(224,164,80,0),rgba(224,164,80,.16) 30%,rgba(224,164,80,0));
+  pointer-events:none;animation:bdlWash 2.2s ease .35s both}
+@keyframes bdlWash{0%{opacity:0;transform:translateX(-30%)}30%{opacity:1}100%{opacity:0;transform:translateX(30%)}}
+.bdl__n.tick{animation:bdlTick .5s cubic-bezier(.3,1.4,.5,1)}
+@keyframes bdlTick{40%{transform:scale(1.35);color:var(--ochre-deep,#C98B33)}}
+.bdl.is-leaving{opacity:0;transform:translateX(18px);overflow:hidden}
+
+/* empty */
+.bd__empty{display:none;flex-direction:column;align-items:center;text-align:center;padding:64px 10px 40px}
+.bd.is-empty .bd__empty{display:flex}
+.bd.is-empty .bd__foot{display:none}
+.bd__empty img{width:96px;height:auto;margin-bottom:22px;opacity:.95}
+.bd__empty h3{margin:0;font-family:var(--display,'Dahlia',Georgia,serif);font-weight:400;font-size:26px}
+.bd__empty p{margin:10px 0 26px;font-size:14px;font-weight:300;line-height:1.6;color:var(--muted,#5B6680);max-width:260px}
+.bd.is-open.is-empty .bd__empty>*{animation:bdlIn .8s cubic-bezier(.2,.7,.1,1) both}
+.bd.is-open.is-empty .bd__empty>:nth-child(2){animation-delay:.08s}
+.bd.is-open.is-empty .bd__empty>:nth-child(3){animation-delay:.14s}
+.bd.is-open.is-empty .bd__empty>:nth-child(4){animation-delay:.2s}
+
+/* foot */
+.bd__foot{padding:22px 30px 28px;border-top:1px solid var(--line,#DCCBC5);background:var(--paper,#FAF5F2)}
+.bd__row{display:flex;align-items:baseline;justify-content:space-between;gap:16px}
+.bd__row span:first-child{font-size:10.5px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--muted,#5B6680)}
+.bd__sub{position:relative;font-family:var(--display,'Dahlia',Georgia,serif);font-size:30px;line-height:1;overflow:hidden}
+.bd__sub b{display:inline-block;font-weight:400}
+.bd__sub b.roll{animation:bdRoll .5s cubic-bezier(.2,.7,.1,1)}
+@keyframes bdRoll{from{opacity:0;transform:translateY(60%)}to{opacity:1;transform:none}}
+.bd__note{margin:10px 0 20px;font-size:12.5px;font-weight:300;line-height:1.55;color:var(--muted,#5B6680)}
+.bd__cta{position:relative;display:flex;align-items:center;justify-content:center;gap:12px;width:100%;height:54px;border:0;overflow:hidden;
+  background:var(--ochre,#E0A450);color:var(--navy,#293A57);font:inherit;font-size:11.5px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;cursor:pointer;
+  text-decoration:none;transition:color .45s ease .05s;box-shadow:inset 0 1px 0 rgba(255,240,210,.45),0 10px 24px -14px rgba(201,139,51,.8)}
+.bd__cta::before{content:"";position:absolute;inset:0;background:var(--navy,#293A57);transform:scaleX(0);transform-origin:100% 50%;transition:transform .6s cubic-bezier(.65,0,.25,1)}
+.bd__cta:hover::before,.bd__cta:focus-visible::before{transform:scaleX(1);transform-origin:0 50%}
+.bd__cta:hover,.bd__cta:focus-visible{color:var(--cream,#F5E9E5)}
+.bd__cta:active{transform:translateY(1px)}
+.bd__cta>*{position:relative}
+.bd__cta svg{transition:transform .5s cubic-bezier(.2,.7,.1,1)}
+.bd__cta:hover svg{transform:translateX(5px)}
+.bd__cta:focus-visible{outline:2px solid var(--riviera,#5B7FAE);outline-offset:3px}
+.bd__more{display:block;margin:16px auto 0;padding:4px 0;border:0;border-bottom:1px solid rgba(201,139,51,.6);background:none;font:inherit;font-size:11px;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--navy,#293A57);cursor:pointer;transition:color .25s}
+.bd__more:hover{color:var(--ochre-deep,#C98B33)}
+.bd__msg{margin:12px 0 0;font-size:12px;font-weight:300;text-align:center;color:var(--muted,#5B6680);opacity:0;transform:translateY(-4px);transition:opacity .4s,transform .4s}
+.bd__msg.is-on{opacity:1;transform:none}
+
+/* the header bag, while its drawer is open */
+.bag.is-active{color:var(--ochre-deep,#C98B33)}
+
+html.bd-lock{overflow:hidden}
+
+@media (max-width:640px){
+  .bd__panel{width:min(420px,calc(100vw - 28px))}
+  .bd__head{padding:24px 22px 16px}
+  .bd__title{font-size:30px}
+  .bd__body{padding:0 22px}
+  .bdl{grid-template-columns:72px minmax(0,1fr) auto;gap:0 14px;padding:18px 0}
+  .bdl__img{width:72px;height:72px}
+  .bdl__name{font-size:12px;letter-spacing:.08em}
+  .bd__foot{padding:18px 22px calc(22px + env(safe-area-inset-bottom))}
+  .bd__sub{font-size:26px}
+  .bdl__qty{height:36px;border-radius:18px}
+  .bdl__qty button{width:34px;height:34px}
+}
+@media (prefers-reduced-motion:reduce){
+  .bd__panel,.bd.is-open .bd__panel,.bd__veil,.bd.is-open .bd__veil,.bdl,.bd__head,.bd__foot,.bd.is-open .bd__head,.bd.is-open .bd__foot{transition:none}
+  .bd.is-open .bdl,.bdl.is-new::after,.bd__sub b.roll,.bd.is-open.is-empty .bd__empty>*{animation:none}
+}
