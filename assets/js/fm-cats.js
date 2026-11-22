@@ -29,7 +29,7 @@
   // spots: pips, "x of y left", sold out at this price; the bag cannot take more than is left
   const paint=card=>{ const total=+card.dataset.total, left=+card.dataset.left;
     card.querySelectorAll('.ocard__pips i').forEach((p,i)=>p.classList.toggle('gone',i>=left));
-    const l=card.querySelector('.ocard__left'); if(l) l.textContent=card.classList.contains('fmcard')?(left>0?left+' left':'None left'):left+' of '+total+' left';
+    const l=card.querySelector('.ocard__left'); if(l) l.textContent=left+' of '+total+' left';
     card.classList.toggle('is-sold',left<=0); };
   const cards=[...document.querySelectorAll('.ocard')]; cards.forEach(paint);
   if(window.MDLFBag){

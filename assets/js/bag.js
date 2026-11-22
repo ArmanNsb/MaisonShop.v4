@@ -181,21 +181,24 @@
  },
  "Madeleine Tower": {
   "url": "product-madeleine-tower.html",
-  "price": "$297.50",
+  "price": "$290",
   "img": "assets/img/bag/hol-madeleine-d.jpg",
   "note": "Tower"
  },
- "Toot Tower, Small": {
+ "Toot Tower, Pomegranate": {
   "url": "product-toot-tower.html",
-  "price": "Price to come",
+  "price": "$190",
   "img": "assets/img/bag/hol-pomegranate-d.jpg",
-  "imgs": {
-   "Pastel Almond": "assets/img/bag/toot-pastel-p1.jpg",
-   "Pomegranate": "assets/img/bag/hol-pomegranate-d.jpg"
-  }
+  "note": "Tower"
+ },
+ "Toot Tower, Pastel Almond": {
+  "url": "product-toot-tower.html",
+  "price": "$190",
+  "img": "assets/img/bag/toot-pastel-p1.jpg",
+  "note": "Tower"
  }
 }); /* /FM-CATALOG */
-  /* FM-SHOP */ for(const [k,v] of Object.entries({"Abrisham Collection": "$105.60", "Diba Collection": "$80.80", "Pansy Cookie": "$80.80", "Noon Berenji": "$89.60", "Toot": "$49.60", "Pa-Derazi": "$63.20", "Calisson": "$57.60", "Coconut Macaroon": "$69.60", "Walnut": "$69.60", "Special Gift Box": "$255", "Rumi Blend": "$18"})) if(CATALOG[k]) CATALOG[k].price=v; /* /FM-SHOP */
+  /* FM-SHOP */ for(const [k,v] of Object.entries({"Abrisham Collection": "$105", "Diba Collection": "$80", "Pansy Cookie": "$80", "Noon Berenji": "$89", "Toot": "$49", "Pa-Derazi": "$63", "Calisson": "$57", "Coconut Macaroon": "$69", "Walnut": "$69", "Special Gift Box": "$255", "Rumi Blend": "$18"})) if(CATALOG[k]) CATALOG[k].price=v; /* /FM-SHOP */
   const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
   const money=n=>'$'+(Math.round(n*100)/100).toLocaleString('en-US',{minimumFractionDigits:n%1?2:0});
   const unit=p=>{const m=/^\$\s*([\d,.]+)$/.exec((p||'').trim()); return m?parseFloat(m[1].replace(/,/g,'')):null;};
