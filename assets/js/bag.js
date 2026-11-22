@@ -134,108 +134,68 @@
     arrow:'<svg width="16" height="10" viewBox="0 0 16 10" aria-hidden="true"><path d="M0 5h14M10 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>'
   };
   /* FM-CATALOG */ Object.assign(CATALOG,{
- "Sofreh Aghd Design": {
+ "Sofreh Aghd": {
   "url": "#fm-weddings",
-  "price": "$9,000",
-  "note": "Local \u00b7 $10,000 credit"
+  "price": "$6,800",
+  "note": "Credit"
  },
- "Sofreh Aghd Design, Destination": {
+ "Destination Sofreh Aghd": {
   "url": "#fm-weddings",
-  "price": "$12,600",
-  "note": "$14,000 credit"
- },
- "Wedding Planning": {
-  "url": "#fm-weddings",
-  "price": "$33,750",
-  "note": "$37,500 credit"
+  "price": "$9,500",
+  "note": "Credit"
  },
  "Wedding Cake": {
   "url": "#fm-weddings",
-  "price": "$850",
-  "note": "$1,000 credit"
+  "price": "$2,900",
+  "note": "Credit"
  },
  "Dessert Table": {
   "url": "#fm-tables",
-  "price": "$9,000",
-  "note": "$10,000 credit"
+  "price": "$6,800",
+  "note": "Credit"
  },
  "Dinner Table": {
   "url": "#fm-tables",
-  "price": "Price to come",
-  "note": "Credit to be confirmed"
+  "price": "$3,900",
+  "note": "Credit"
  },
- "Custom Cake, Petite": {
+ "Birthday Custom Cake": {
   "url": "#fm-cakes",
-  "price": "$255",
-  "note": "$300 credit"
- },
- "Custom Cake, Classic": {
-  "url": "#fm-cakes",
-  "price": "$510",
-  "note": "$600 credit"
- },
- "Custom Cake, Grand": {
-  "url": "#fm-cakes",
-  "price": "$850",
-  "note": "$1,000 credit"
- },
- "Bridal Shower Cake": {
-  "url": "#fm-cakes",
-  "price": "Price to come",
-  "note": "Credit to be confirmed"
- },
- "Anniversary Cake": {
-  "url": "#fm-cakes",
-  "price": "Price to come",
-  "note": "Credit to be confirmed"
+  "price": "$570",
+  "note": "Credit"
  },
  "Baby Shower": {
   "url": "#fm-nursery",
-  "price": "Price to come",
-  "note": "Credit to be confirmed"
+  "price": "$6,800",
+  "note": "Credit"
  },
  "Custom Birthday Cake": {
   "url": "#fm-nursery",
-  "price": "Price to come",
-  "note": "Credit to be confirmed"
+  "price": "$850",
+  "note": "Credit"
  },
  "One Sweet First Year": {
   "url": "#fm-nursery",
-  "price": "$1,260"
+  "price": "$1,260",
+  "note": "12 cakes"
  },
  "Madeleine Tower": {
-  "url": "#fm-towers",
+  "url": "product-madeleine-tower.html",
   "price": "$297.50",
-  "img": "assets/img/bag/hol-madeleine-d.jpg"
+  "img": "assets/img/bag/hol-madeleine-d.jpg",
+  "note": "Tower"
  },
  "Toot Tower, Small": {
-  "url": "#fm-towers",
+  "url": "product-toot-tower.html",
   "price": "Price to come",
   "img": "assets/img/bag/hol-pomegranate-d.jpg",
-  "imgs": {
-   "Pastel Almond": "assets/img/bag/toot-pastel-p1.jpg",
-   "Pomegranate": "assets/img/bag/hol-pomegranate-d.jpg"
-  }
- },
- "Toot Tower, Medium": {
-  "url": "#fm-towers",
-  "price": "$195.50",
-  "img": "assets/img/bag/hol-pomegranate-d.jpg",
-  "imgs": {
-   "Pastel Almond": "assets/img/bag/toot-pastel-p1.jpg",
-   "Pomegranate": "assets/img/bag/hol-pomegranate-d.jpg"
-  }
- },
- "Toot Tower, Large": {
-  "url": "#fm-towers",
-  "price": "Price to come",
-  "img": "assets/img/bag/toot-pastel-p1.jpg",
   "imgs": {
    "Pastel Almond": "assets/img/bag/toot-pastel-p1.jpg",
    "Pomegranate": "assets/img/bag/hol-pomegranate-d.jpg"
   }
  }
 }); /* /FM-CATALOG */
+  /* FM-SHOP */ for(const [k,v] of Object.entries({"Abrisham Collection": "$105.60", "Diba Collection": "$80.80", "Pansy Cookie": "$80.80", "Noon Berenji": "$89.60", "Toot": "$49.60", "Pa-Derazi": "$63.20", "Calisson": "$57.60", "Coconut Macaroon": "$69.60", "Walnut": "$69.60", "Special Gift Box": "$255", "Rumi Blend": "$18"})) if(CATALOG[k]) CATALOG[k].price=v; /* /FM-SHOP */
   const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
   const money=n=>'$'+(Math.round(n*100)/100).toLocaleString('en-US',{minimumFractionDigits:n%1?2:0});
   const unit=p=>{const m=/^\$\s*([\d,.]+)$/.exec((p||'').trim()); return m?parseFloat(m[1].replace(/,/g,'')):null;};

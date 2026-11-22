@@ -1,0 +1,192 @@
+/* Fork Monday: how the offer works, on the same paper as the calendar, just under it.
+   Each step's number is circled in gold marker, as the 30 is; a fine gold thread runs from one to the next.
+   The two date windows are small calendar leaves. */
+.fmhow{position:relative;z-index:1;background:transparent;margin-top:calc(-1 * var(--fmhowpull,0px));padding:0 var(--gutter,48px) 88px}
+.intro:not(.is-intro) + .fmhow{visibility:hidden}
+.intro.is-intro .intro__cue{opacity:0!important}
+.fmhow__in{max-width:1080px;margin:0 auto}
+/* title on the left, the three steps beside it; each step's number is small, circled in gold marker, beside its text */
+.fmhow__top{display:grid;grid-template-columns:190px minmax(0,1fr);gap:0 40px;align-items:start}
+.fmhow__title{margin:6px 0 0;text-align:left;font:400 clamp(30px,2.5vw,38px)/1.05 Dahlia;color:var(--navy,#293A57)}
+.fmhow__steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 36px;text-align:left}
+.fmhow__step{display:grid;grid-template-columns:46px minmax(0,1fr);gap:0 14px;align-items:start}
+.fmhow__num{position:relative;display:grid;place-items:center;width:46px;height:40px;grid-row:span 2}
+.fmhow__num b{position:relative;font:400 24px/1 Dahlia;color:#C98B33}
+.fmhow__ring{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.fmhow__ring path{fill:none;stroke:#C98B33;stroke-width:1.8;stroke-linecap:round;stroke-opacity:.9;vector-effect:non-scaling-stroke}
+.fmhow__step:nth-child(2) .fmhow__ring{transform:rotate(14deg) scaleX(-1)}
+.fmhow__step:nth-child(3) .fmhow__ring{transform:rotate(-8deg)}
+.fmhow__step h3{margin:8px 0 8px;font:400 21px/1.15 Dahlia;color:var(--navy,#293A57)}
+.fmhow__step p{margin:0;font-size:15.5px;line-height:1.6;color:#56607A}
+
+.fmhow__members{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:40px 64px;margin-top:56px;padding:40px 48px;
+  border:1px solid rgba(41,58,87,.22);border-radius:4px;background:rgba(255,252,248,.45)}
+.fmhow__leaves{display:flex;gap:18px}
+.fmhow__leaf{width:164px;text-align:center;background:#FDFBF8;border:1px solid rgba(41,58,87,.28);box-shadow:0 1px 0 rgba(41,58,87,.06),0 12px 22px -16px rgba(41,58,87,.35);padding:0 0 14px;position:relative}
+.fmhow__leaf::before{content:"";position:absolute;left:50%;top:-7px;width:44px;height:12px;margin-left:-22px;
+  background:radial-gradient(circle at 25% 50%,#C9B9A9 0 3px,transparent 3.5px),radial-gradient(circle at 75% 50%,#C9B9A9 0 3px,transparent 3.5px)}
+.fmhow__lab{margin:0;padding:9px 6px 8px;border-bottom:1px solid rgba(41,58,87,.28);font-size:9.5px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:#5B6680}
+.fmhow__leaf+.fmhow__leaf .fmhow__lab{color:#94692D}
+.fmhow__days{margin:12px 0 2px;font:400 46px/1 Dahlia;color:var(--navy,#293A57)}
+.fmhow__days i{font-style:normal;margin:0 .12em;color:#8A93A8}
+.fmhow__days .g{color:#C98B33}
+.fmhow__when{margin:8px 8px 0;font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#5B6680}
+.fmhow__join p{margin:0 0 22px;font:400 22px/1.4 Dahlia;color:var(--navy,#293A57);max-width:34ch}
+
+@media (max-width:900px){
+  .fmhow{padding-bottom:64px}
+  .fmhow__top{grid-template-columns:1fr;gap:22px}
+  .fmhow__title{margin:0;font-size:32px}
+  .fmhow__steps{grid-template-columns:1fr;gap:24px}
+  .fmhow__step h3{font-size:21px}
+  .fmhow__step p{font-size:16px}
+  .fmhow__members{grid-template-columns:1fr;gap:28px;margin-top:40px;padding:30px 20px 26px}
+  .fmhow__leaves{justify-content:center;gap:14px}
+  .fmhow__leaf{width:calc(50% - 7px);max-width:170px}
+  .fmhow__join{text-align:center}
+  .fmhow__join p{font-size:20px;margin:0 auto 20px}
+  .fmhow__cta{width:100%}
+}
+.fmhow__num{grid-column:1;grid-row:1 / span 2}
+.fmhow__step h3{grid-column:2;grid-row:1}
+.fmhow__step p{grid-column:2;grid-row:2}
+.fmhow__step{grid-template-rows:auto 1fr}
+@media (min-width:901px){
+  .fmhow__in{max-width:1180px}
+  .fmhow__top{grid-template-columns:170px minmax(0,1fr);gap:0 32px}
+  .fmhow__steps{gap:0 32px}
+}
+.fmhow__title{white-space:nowrap}
+@media (min-width:901px){.fmhow__top{grid-template-columns:auto minmax(0,1fr);gap:0 48px}}
+/* numbers without the ring: gold Dahlia beside the step */
+.fmhow__ring{display:none}
+.fmhow__num{width:auto;height:auto;place-items:start;padding-top:4px}
+.fmhow__num b{font-size:30px;line-height:1}
+.fmhow__step{grid-template-columns:24px minmax(0,1fr);gap:0 12px}
+
+/* ---- refined: each step hangs from a fine rule (like a line of the calendar), number and title on one line,
+   the paragraph under them; every column the same width and rhythm ---- */
+@media (min-width:901px){.fmhow__top{grid-template-columns:auto minmax(0,1fr)}.fmhow__title{padding-top:20px}}
+.fmhow__title{line-height:1.02}
+.fmhow__steps{gap:0 44px;align-items:start}
+.fmhow__step{position:relative;display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-rows:auto auto;column-gap:12px;align-items:baseline;padding-top:22px}
+.fmhow__step::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:rgba(41,58,87,.32);transform-origin:0 50%}
+.fmhow__num{grid-column:1;grid-row:1;width:auto;height:auto;display:block;padding:0;margin:0}
+.fmhow__num b{font:400 25px/1 Dahlia;color:#C98B33}
+.fmhow__step h3{grid-column:2;grid-row:1;margin:0;font:400 22px/1.2 Dahlia;color:var(--navy,#293A57)}
+.fmhow__step p{grid-column:1 / -1;grid-row:2;margin:12px 0 0;font-size:15.5px;line-height:1.65;color:#56607A;max-width:34ch;text-wrap:pretty}
+@media (max-width:900px){
+  .fmhow__title{padding-top:0}
+  .fmhow__steps{gap:26px}
+  .fmhow__step{padding-top:18px}
+  .fmhow__step p{max-width:none;font-size:16px}
+}
+
+/* ---- the reveal: once the paper is up, the first scroll brings the explanation in, piece by piece ---- */
+.fmhow [data-rv]{opacity:0;transform:translateY(22px);filter:blur(6px);
+  transition:opacity .9s cubic-bezier(.16,1,.3,1),transform 1.15s cubic-bezier(.16,1,.3,1),filter .9s cubic-bezier(.16,1,.3,1);
+  transition-delay:calc(var(--rv,0) * 140ms)}
+.fmhow .fmhow__step::before{transform:scaleX(0);transition:transform 1.3s cubic-bezier(.65,0,.2,1);transition-delay:calc(var(--rv,0) * 140ms)}
+.fmhow.is-in [data-rv]{opacity:1;transform:none;filter:none}
+.fmhow.is-in .fmhow__step::before{transform:scaleX(1)}
+@media (prefers-reduced-motion:reduce){.fmhow [data-rv],.fmhow .fmhow__step::before{transition:none!important;opacity:1;transform:none;filter:none}}
+html.fm-edit .fmhow [data-rv]{opacity:1;transform:none;filter:none;transition:none}
+html.fm-edit .fmhow .fmhow__step::before{transform:none;transition:none}
+
+/* the members note in the site's text face (KoHo), led by its first sentence, the last one set apart in gold */
+.fmhow__join p{font:400 16.5px/1.65 var(--text);color:#56607A;max-width:44ch}
+.fmhow__join p .lead{display:block;margin-bottom:6px;font:600 20px/1.35 var(--text);color:var(--navy,#293A57);letter-spacing:-.005em}
+.fmhow__join p .urg{display:block;margin-top:8px;font-weight:600;color:#A97528}
+@media (max-width:900px){.fmhow__join p{font-size:16px;margin:0 auto 22px}.fmhow__join p .lead{font-size:19px}}
+/* members note: two levels only. The first sentence leads; the rest reads as one quiet paragraph, same colour */
+.fmhow__join p{font:400 16px/1.65 var(--text);color:#56607A;max-width:42ch}
+.fmhow__join p .lead{display:block;margin-bottom:8px;font:500 19px/1.4 var(--text);color:var(--navy,#293A57);letter-spacing:0}
+.fmhow__join p .urg{display:inline;margin:0;font-weight:400;color:inherit}
+@media (max-width:900px){.fmhow__join p{font-size:16px}.fmhow__join p .lead{font-size:18px}}
+@media (max-width:900px){.fmhow{padding-top:64px}}
+@media (max-width:900px){.intro__stage::after{height:30%;background:linear-gradient(180deg,rgba(245,233,229,0),var(--cream,#F5E9E5) 70%)}}
+/* the lifted page's warm paper fades into the page's cream at the bottom, so there is no seam */
+.intro__stage::after{content:"";position:absolute;left:0;right:0;bottom:0;height:34%;z-index:3;pointer-events:none;opacity:0;
+  background:linear-gradient(180deg,rgba(245,233,229,0),var(--cream,#F5E9E5) 85%);transition:opacity .6s ease}
+.intro.is-intro .intro__stage::after{opacity:1}
+/* desktop: no rules above the steps; the columns and the gold numbers carry the order on their own */
+@media (min-width:901px){.fmhow .fmhow__step::before{display:none}.fmhow__step{padding-top:0}.fmhow__title{padding-top:0}}
+/* desktop: "How it works" stands further off; the three steps sit closer together */
+@media (min-width:901px){.fmhow__top{gap:0 88px}.fmhow__steps{gap:0 30px}}
+
+/* the calendar leaves in navy: cream type, the 30 in gold, the rings in brass */
+.fmhow__leaf{background:#293A57;border-color:#293A57;box-shadow:0 14px 24px -14px rgba(41,58,87,.55)}
+.fmhow__leaf::before{background:radial-gradient(circle at 25% 50%,#B8935A 0 3px,transparent 3.5px),radial-gradient(circle at 75% 50%,#B8935A 0 3px,transparent 3.5px)}
+.fmhow__lab{border-bottom-color:rgba(245,233,229,.18);color:rgba(245,233,229,.72)}
+.fmhow__leaf+.fmhow__leaf .fmhow__lab{color:#D9A85C}
+.fmhow__days{color:#F5E9E5}
+.fmhow__days i{color:rgba(245,233,229,.45)}
+.fmhow__days .g{color:#D9A85C}
+.fmhow__when{color:rgba(245,233,229,.62)}
+/* the members panel in navy; the leaves become fine cream outlines on it, the button stays gold */
+.fmhow__members{background:#293A57;border-color:#293A57}
+.fmhow__leaf{background:transparent;border:1px solid rgba(245,233,229,.32);box-shadow:none}
+.fmhow__leaf::before{background:radial-gradient(circle at 25% 50%,#C9A266 0 3px,transparent 3.5px),radial-gradient(circle at 75% 50%,#C9A266 0 3px,transparent 3.5px)}
+.fmhow__lab{border-bottom-color:rgba(245,233,229,.22);color:rgba(245,233,229,.7)}
+.fmhow__leaf+.fmhow__leaf .fmhow__lab{color:#D9A85C}
+.fmhow__join p{color:rgba(245,233,229,.72)}
+.fmhow__join p .lead{color:#F5E9E5}
+.fmhow__cta:hover{background:#F5E9E5;border-color:#F5E9E5;color:#293A57}
+/* phone: the fork layer sits above the cream fade at the bottom of the stage, so the fork is never faded out */
+@media (max-width:900px){.fm{z-index:4}}
+/* members band: the navy runs the full width of the screen, edge to edge; the content stays on the page's column.
+   The navy is a pseudo-element wider than any screen, clipped by the section, so it stays edge to edge whatever the editor's moves and sizes */
+.fmhow{overflow-x:clip}
+.fmhow__members{position:relative;z-index:0;background:transparent;border:0;border-radius:0;padding-top:52px;padding-bottom:52px}
+.fmhow__members::before{content:"";position:absolute;top:0;bottom:0;left:-100vw;right:-100vw;z-index:-1;background:#293A57}
+@media (max-width:900px){.fmhow__members{padding-top:40px;padding-bottom:36px}}
+/* in the band the content lines up with the page column: dates under "How it works", no extra inset */
+.fmhow__members{padding-left:0;padding-right:0;margin-top:72px}
+@media (max-width:900px){.fmhow__members{margin-top:48px}}
+/* phone: one continuous surface. The stage stays clipped at the top and sides but opens at the bottom,
+   so the fork runs on past it and overlaps "How it works"; the side fade now lives on the calendar strip alone */
+@media (max-width:900px){
+  .intro__stage{overflow:visible;clip-path:inset(0 0 -100vh 0)}
+  .fm{-webkit-mask-image:none!important;mask-image:none!important}
+  .intro{z-index:2}
+  .fmhow{z-index:1}
+}
+/* desktop: about 80px of air between the steps and the navy band, and the same below it before the next section */
+@media (min-width:901px){
+  .fmhow__members{margin-top:86px}
+  .fmhow{padding-bottom:max(24px,calc(88px + var(--fmhowdy,0px)))}
+}
+
+/* ---- the members band: a little more presence, kept quiet ----
+   the pointer becomes the gold hand-drawn fork; the 30 gets the same gold ring as the hero, drawn by hand when the
+   band comes into view; the button wears a fine gold frame and catches the light now and then */
+@media (hover:hover) and (pointer:fine){
+  .fmhow__members,.fmhow__members a,.fmhow__members button{
+    cursor:url("../img/fm/fork-cursor.png") 5 4,auto;
+    cursor:-webkit-image-set(url("../img/fm/fork-cursor.png") 1x,url("../img/fm/fork-cursor-2x.png") 2x) 5 4,auto;
+    cursor:image-set(url("../img/fm/fork-cursor.png") 1x,url("../img/fm/fork-cursor-2x.png") 2x) 5 4,auto}
+}
+.fmhow__days .g{position:relative;display:inline-block}
+.fmring30{position:absolute;left:-22%;top:-27%;width:144%;height:154%;overflow:visible;pointer-events:none}
+.fmring30 path{fill:none;stroke:#D9A85C;stroke-width:1.5;stroke-linecap:round;vector-effect:non-scaling-stroke;stroke-dasharray:1;stroke-dashoffset:1}
+.fmhow__members.is-lit .fmring30 path{stroke-dashoffset:0;transition:stroke-dashoffset 1.9s cubic-bezier(.62,.02,.32,1) .45s}
+
+.fmhow__cta{position:relative;overflow:hidden;outline:1px solid rgba(217,168,92,.5);outline-offset:6px;transition:background .35s,color .35s,border-color .35s,outline-offset .45s cubic-bezier(.2,.7,.2,1),outline-color .35s}
+.fmhow__cta:hover{outline-offset:3px;outline-color:rgba(245,233,229,.6)}
+.fmhow__cta::after{content:"";position:absolute;top:-20%;bottom:-20%;left:-60%;width:40%;pointer-events:none;
+  background:linear-gradient(100deg,rgba(255,250,238,0) 0%,rgba(255,250,238,.55) 50%,rgba(255,250,238,0) 100%);transform:skewX(-18deg);opacity:0}
+.fmhow__members.is-lit .fmhow__cta::after{animation:fmsheen 6.5s cubic-bezier(.45,.05,.3,1) 2.4s infinite}
+@keyframes fmsheen{0%{left:-60%;opacity:1}22%{left:130%;opacity:1}23%,100%{left:130%;opacity:0}}
+@media (prefers-reduced-motion:reduce){
+  .fmring30 path{stroke-dashoffset:0!important;transition:none!important}
+  .fmhow__members.is-lit .fmhow__cta::after{animation:none}
+}
+/* the date cards a little larger */
+@media (min-width:901px){
+  .fmhow__leaf{width:196px}
+  .fmhow__leaves{gap:22px}
+  .fmhow__days{font-size:56px;margin:14px 0 4px}
+  .fmhow__lab{font-size:10.5px}
+  .fmhow__when{font-size:10.5px}
+}
+@media (max-width:900px){ .fmhow__leaf{max-width:190px}.fmhow__days{font-size:46px} }

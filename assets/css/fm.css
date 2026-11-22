@@ -4,7 +4,7 @@
 .intro{height:200vh!important}
 /* the calendar strip, lying still under the paper */
 .fm{position:absolute;inset:0;z-index:2;pointer-events:none;
-  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 30%,#000 70%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 30%,#000 70%,transparent 100%)}
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 16%,#000 84%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 16%,#000 84%,transparent 100%)}
 .fm svg{position:absolute;left:0;top:0;overflow:visible}
 .fm .ln{stroke:#293A57;stroke-opacity:.42;stroke-width:1}
 .fm .wd{font-family:Helvetica,Arial,sans-serif;font-weight:500;letter-spacing:.24em;fill:#5B6680}
@@ -43,7 +43,7 @@
 .fm .n30{fill:#C98B33}
 .sv--title .sv-t1{display:block!important}.sv--title .sv-t2{display:none!important}
 @font-face{font-family:"Mrs Saint Delafield";src:url("../fonts/mrs-saint-delafield.woff2") format('woff2');font-display:block}
-.fm .script text{font-family:"Mrs Saint Delafield",cursive;fill:#C98B33}
+.fm .script text{font-family:Dahlia,serif;fill:#C98B33}
 /* edit mode */
 .fme{position:absolute;inset:0;z-index:60;pointer-events:none}
 .fmbox{position:absolute;border:1.5px dashed #2F7BF6;background:rgba(47,123,246,.04);cursor:move;pointer-events:auto;touch-action:none}
@@ -82,3 +82,44 @@
   .fm.photo{background:linear-gradient(180deg,#EFD7C8 0%,#F1DCCF 40%,#F4E5DE 75%,#F5E9E5 92%)}
 }
 
+/* edit mode: text */
+html.fm-textmode .fmt,html.fm-textmode .fmt p{pointer-events:auto}
+html.fm-textmode [data-fmt]{outline:1px dashed rgba(47,123,246,.55);outline-offset:3px;cursor:text}
+html.fm-textmode [data-fmt]:hover{outline-color:#2F7BF6;background:rgba(47,123,246,.05)}
+html.fm-textmode [data-fmt][contenteditable=true]{outline:2px solid #2F7BF6;background:rgba(47,123,246,.07);caret-color:#2F7BF6}
+html.fm-textmode .fmt p{animation:none!important;opacity:1!important;filter:none!important;text-shadow:none!important}
+/* the day lines carried down from the strip toward "How it works": only once the paper has lifted */
+.fm .ln.run{opacity:0;transition:opacity .4s ease}
+.intro.is-intro .fm .ln.run{opacity:1;transition:opacity 1s ease 1.6s}
+/* animation off for now: once the paper has lifted, the ring and the words are simply there */
+.intro.is-intro .fm .ring{transition:none!important}
+.intro.is-intro .fmt,.intro.is-intro .fmt p,.intro.is-intro .fm .later{animation:none!important;transition:none!important;opacity:1!important;filter:none!important;text-shadow:none!important;translate:none!important}
+.fmt p::before{display:none!important}
+.fme--how{position:absolute;inset:0;z-index:60;pointer-events:none}
+/* edit mode: content-edge guides */
+.fmguides{position:fixed;inset:0;z-index:9000;pointer-events:none}
+.fmguides i{position:absolute;top:0;bottom:0;width:0;border-left:1px dashed #E0368A}
+.fmguides b{position:absolute;top:50%;padding:3px 7px;border-radius:4px;background:#E0368A;color:#fff;font:600 11px/1.2 -apple-system,Helvetica,Arial,sans-serif;white-space:nowrap;letter-spacing:0;text-transform:none}
+.fmguides .l b{left:6px}.fmguides .r b{right:6px}
+/* "Save up to": the offer line of the lockup, set small and tracked in gold under the headline */
+@media (min-width:901px){.fmt .v{font:600 12px/1.4 var(--text);letter-spacing:.3em;text-transform:uppercase;color:#A97528}}
+/* phone: the lifted page is one centred column, like the desktop lockup: Fork Monday, the line, the offer, then the strip */
+@media (max-width:900px){
+  .fmt{text-align:center}
+  .fmt .h{text-wrap:balance}
+  .fmt .mbr{display:none}
+  .fmt .v{font:600 11px/1.4 var(--text);letter-spacing:.28em;text-transform:uppercase;color:#A97528}
+}
+/* phone: the lockup above the strip is set left, on the page's margin, like an editorial cover line */
+@media (max-width:900px){.fmt{text-align:left}.fmt p{margin-left:0!important;margin-right:auto!important}.fmt .h{text-wrap:wrap}}
+@media (max-width:900px){.fmt .mbr{display:inline!important}}
+@media (max-width:900px){.fmt{left:var(--gutter,20px);right:var(--gutter,20px)}}
+@media (max-width:900px){.fmt p{transform-origin:0 50%!important}}
+html.fm-textmode .fm,html.fm-textmode .fm svg{pointer-events:none}
+html.fm-textmode .fm [data-fmsvg]{pointer-events:auto;cursor:text;outline:1px dashed rgba(47,123,246,.55)}
+.fmsvgin{position:fixed;z-index:9500;min-height:40px;padding:6px 12px;resize:none;overflow:hidden;line-height:1.15;border:2px solid #2F7BF6;border-radius:6px;background:#fff;font:400 22px/1 Dahlia;color:#C98B33;outline:none;box-shadow:0 6px 20px rgba(0,0,0,.18)}
+/* the photographs carry their own soft edges, so the drawn strip's side fade is not needed over them */
+.fm.fm--photo{-webkit-mask-image:none!important;mask-image:none!important}
+/* the lines by the calendar are printed on it: always there (no fade or glow), revealed only as the paper lifts */
+.fmt,.intro.is-intro .fmt{opacity:1!important;transition:none!important}
+.fmt p,.intro.is-intro .fmt p{opacity:1!important;filter:none!important;animation:none!important;text-shadow:none!important}

@@ -29,7 +29,7 @@
   // spots: pips, "x of y left", sold out at this price; the bag cannot take more than is left
   const paint=card=>{ const total=+card.dataset.total, left=+card.dataset.left;
     card.querySelectorAll('.ocard__pips i').forEach((p,i)=>p.classList.toggle('gone',i>=left));
-    const l=card.querySelector('.ocard__left'); if(l) l.textContent=left+' of '+total+' left';
+    const l=card.querySelector('.ocard__left'); if(l) l.textContent=card.classList.contains('fmcard')?(left>0?left+' left':'None left'):left+' of '+total+' left';
     card.classList.toggle('is-sold',left<=0); };
   const cards=[...document.querySelectorAll('.ocard')]; cards.forEach(paint);
   if(window.MDLFBag){
@@ -55,7 +55,7 @@
 /* Fork Monday: the first time a polaroid comes into view the camera fires (a flash over the page), the print
    comes out of the camera from the top, and then it develops */
 (function(){
-  const pols=[...document.querySelectorAll('.fmcat .pol')]; if(!pols.length||!('IntersectionObserver' in window)) return;
+  const pols=[...document.querySelectorAll('.fmcat .pol, .fmsec .pol')]; if(!pols.length||!('IntersectionObserver' in window)) return;
   if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   document.documentElement.classList.add('fmdev');
   const fl=document.createElement('div'); fl.className='fmflash'; fl.setAttribute('aria-hidden','true'); document.body.appendChild(fl);
@@ -67,13 +67,13 @@
   const io=new IntersectionObserver(es=>es.forEach(e=>{ if(!e.isIntersecting) return; const p=e.target.querySelector('.pol'); io.unobserve(e.target);
     flash(p); p.classList.add('is-dev');
     p.addEventListener('animationend',ev=>{ if(ev.animationName==='fmeject') p.classList.add('is-out'); }); }),{threshold:.6});
-  pols.forEach(p=>io.observe(p.closest('.fmcat__head')||p));
+  pols.forEach(p=>io.observe(p.closest('.fmcat__head, .fmsec .shead')||p));
 })();
 
 /* Fork Monday: a hand-drawn gold fork lies across the line where each part of the shop begins
    (it takes the place of the holiday garland). It is drawn in from the handle to the tines when it comes into view. */
 (function(){
-  const at=['#fm-weddings','#sweets','#gifts','#gifting'];
+  const at=['#fm-weddings','#fm-tables','#fm-cakes','#fm-nursery','#fm-towers','#sweets','#gifts'];   // between every part of the shop
   const els=at.map(s=>document.querySelector(s)).filter(Boolean).map(sec=>{
     const d=document.createElement('div'); d.className='fmfork'; d.setAttribute('aria-hidden','true');
     d.innerHTML='<img src="assets/img/fm-fork-divider.png" alt="" width="900" height="139" decoding="async">';
@@ -100,5 +100,16 @@
       <rect x="8" y="8" width="152" height="76" rx="2" fill="none" stroke="currentColor" stroke-width="1.1"/>
       <text x="84" y="52" text-anchor="middle" font-family="Dahlia,serif" font-size="27.5">Fork Monday</text>
       <text x="84" y="70" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-weight="700" font-size="8.4" letter-spacing="3.6">30 NOV</text></g></svg>`;
-  document.querySelectorAll('.fmcat .pol').forEach((p,i)=>{ const s=document.createElement('span'); s.className='pol__stamp'; s.setAttribute('aria-hidden','true'); s.innerHTML=svg(i); p.appendChild(s); });
+  document.querySelectorAll('.fmcat .pol, .fmsec .pol').forEach((p,i)=>{ const s=document.createElement('span'); s.className='pol__stamp'; s.setAttribute('aria-hidden','true'); s.innerHTML=svg(i); p.appendChild(s); });
+})();
+
+/* Fork Monday: the members band. The 30 gets a hand-drawn gold ring (as in the hero) and the button starts to
+   catch the light, once the band is well in view */
+(function(){
+  const band=document.querySelector('.fmhow__members'); if(!band) return;
+  const g=band.querySelector('.fmhow__days .g');
+  if(g){ g.insertAdjacentHTML('beforeend','<svg class="fmring30" viewBox="0 0 100 70" aria-hidden="true"><path pathLength="1" d="M78 9 C56 1 14 4 6 32 C0 58 34 70 62 66 C90 62 102 44 95 25 C90 11 74 4 54 5"/></svg>'); }
+  if(!('IntersectionObserver' in window)){ band.classList.add('is-lit'); return; }
+  const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ band.classList.add('is-lit'); io.disconnect(); } }),{threshold:.55});
+  io.observe(band);
 })();

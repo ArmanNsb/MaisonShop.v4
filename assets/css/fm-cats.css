@@ -287,15 +287,14 @@
 .fmcat .fmcat__lbl{color:#A97528}
 .fmcat .pol figcaption{color:#A97528}
 /* phones: room to breathe between the intro and the first category */
-@media (max-width:900px){#fm-weddings{margin-top:56px}}
-@media (min-width:901px){#fm-weddings{margin-top:24px}}
+
 
 /* the date stamp on each polaroid: gold ink on the white of the frame, running onto the photo */
 .pol__stamp{position:absolute;z-index:3;pointer-events:none;color:#A2701F;right:-7%;bottom:2%;width:40%;
   transform:rotate(-8deg);opacity:.9}
 .fmcat:nth-of-type(even) .pol__stamp{transform:rotate(6deg)}
 .pol__stamp svg{display:block;width:100%;height:auto;overflow:visible}
-@media (max-width:900px){.fmcat .fmcat__head .pol__stamp{width:30%;right:-4%;bottom:4%}}
+@media (max-width:900px){.fmcat .fmcat__head .pol__stamp{width:30%;right:1%;bottom:4%}}
 /* the stamp is gold, so the caption under the photo goes back to navy */
 .fmcat .pol figcaption{color:#293A57}
 

@@ -1,0 +1,123 @@
+/* Fork Monday: the offer sections, built like the shop's own sections (title on the left, products in a grid),
+   with a few Fork Monday touches: the gold eyebrow and date stamp, a gold "% off" seal on each photo, the spots
+   left at this price, and two prices (the regular one struck through, the Fork Monday price beside it). */
+
+/* the section head */
+
+/* the "% off" seal: top right of the photo (the "In bag" tag keeps the top left) */
+.fmoff{position:absolute;top:12px;right:12px;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  width:54px;height:54px;border-radius:50%;background:rgba(245,233,229,.94);color:var(--ochre-deep);
+  box-shadow:inset 0 0 0 1px rgba(169,117,40,.55),inset 0 0 0 4px rgba(245,233,229,.94),inset 0 0 0 5px rgba(169,117,40,.3),0 4px 12px -6px rgba(41,58,87,.35);
+  line-height:1;pointer-events:none}
+.fmoff b{font-family:var(--display);font-weight:400;font-size:18px;letter-spacing:-.01em}
+.fmoff i{margin-top:3px;font-style:normal;font-family:var(--text);font-size:7.5px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;padding-left:.24em}
+
+/* no photograph yet: the embossed monogram on paper */
+.fmph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:#EFE3DC}
+.card__media .fmph img{position:static;width:34%;height:auto;object-fit:contain;opacity:.85}
+.fmph span{font-size:9.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#8A8FA0}
+
+/* spots left at this price, under the name */
+.fmspots{display:flex;align-items:center;gap:8px;margin:7px 0 0;font-size:9.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--ochre-deep)}
+.fmspots .ocard__pips{gap:3px}
+.fmspots .ocard__pips i{width:5px;height:5px}
+
+/* two prices: the regular one struck through and quiet, the Fork Monday one clear */
+.fmprice{display:inline-flex;align-items:baseline;gap:8px}
+.fmprice s{font-size:13px;font-weight:300;color:#8A8FA0;text-decoration:line-through;text-decoration-thickness:1px;text-decoration-color:rgba(41,58,87,.55)}
+.fmprice b{font-size:16px;font-weight:600;color:var(--navy);letter-spacing:.01em}
+.fmprice--tbc{font-size:12.5px;font-weight:300;font-style:italic;color:var(--muted)}
+
+/* sold out at the Fork Monday price */
+.fmcard .ocard__sold{display:none}
+.fmcard.is-sold .ocard__sold{display:inline-flex}
+.fmcard.is-sold .buy{display:none}
+.fmcard.is-sold .card__media img,.fmcard.is-sold .fmph{filter:grayscale(.5) opacity(.7)}
+.fmcard.is-sold .fmprice b{color:var(--muted)}
+.fmcard.is-sold .fmspots{color:var(--muted)}
+/* the sold-out label takes the button's slot on the right */
+.fmcard .card__meta>.ocard__sold{position:absolute;right:14px;top:50%;transform:translateY(-50%)}
+
+@media (max-width:900px){
+  .fmoff{top:8px;right:8px;width:44px;height:44px}
+  .fmoff b{font-size:15px}
+  .fmoff i{font-size:6.5px}
+  .fmspots{margin-top:6px;font-size:8.5px;letter-spacing:.14em}
+  .fmprice{flex-wrap:wrap;gap:2px 7px}
+  .fmprice b{font-size:15px}
+  .fmprice s{font-size:12px}
+  .fmcard .card__meta>.ocard__sold{top:auto;bottom:34px;transform:translateY(50%)}
+  .fmph span{font-size:8px}
+}
+
+/* an empty cell in a short row stays page-coloured, not a white block */
+.fmproducts{background:none}
+/* with two prices on the card, the note or choice sits above the prices (as on phones), so nothing is cut short */
+.fmcard .card__spec{flex-direction:column;align-items:flex-start;gap:5px}
+.fmcard .card__spec .card__bar{display:none}
+.fmcard .card__meta{padding-top:10px}
+.fmcard .pick{margin-right:0}
+
+/* phones: the gold fork between sections needs the same room above every section it opens */
+@media (max-width:900px){.fmsec.has-fmfork:not(#fm-weddings){margin-top:40px}}
+/* the gold fork: full size only where the shop begins; between the other sections it comes back small */
+.has-fmfork:not(#fm-weddings) .fmfork{width:118px;padding:0 14px 0 12px;left:calc(var(--gutter) + max(0px, (100% - 2 * var(--gutter) - var(--wrap)) / 2) - 12px)}
+@media (max-width:900px){
+  .has-fmfork:not(#fm-weddings) .fmfork{width:88px;padding:0 10px 0 8px;left:calc(var(--gutter) - 8px)}
+  .fmsec.has-fmfork:not(#fm-weddings){margin-top:28px}
+}
+/* the prices, clearer: the regular price struck through by a visible ochre line, the Fork Monday price larger,
+   and the saving beside it in small gold capitals (no seal on the photo) */
+.fmprice{flex-wrap:wrap;gap:2px 9px}
+.fmprice s{font-size:14px;font-weight:400;color:#6E7690;text-decoration:line-through;text-decoration-color:var(--ochre-deep);text-decoration-thickness:1.5px}
+.fmprice b{font-size:17px;font-weight:600;color:var(--navy)}
+.fmoff-t{align-self:center;font-size:9.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--ochre-deep)}
+.fmcard.is-sold .fmoff-t{color:var(--muted)}
+@media (max-width:900px){.fmprice s{font-size:13px}.fmprice b{font-size:16px}.fmoff-t{font-size:8.5px;letter-spacing:.14em}}
+
+/* ---- the text under the photo, set like the shop's own cards: three quiet lines ----
+   1  the name (the shop's style)
+   2  one line in small gold capitals: the saving | what is left at this price
+   3  the note | the Fork Monday price, then the regular price, smaller and struck through */
+.fmcard .card__spec{flex-direction:row;align-items:baseline;gap:0}
+.fmcard .card__spec .card__bar{display:inline}
+.fmcard .card__meta{padding-top:6px}
+.fmspots{gap:0;margin:6px 0 0;font-size:9.5px;font-weight:600;letter-spacing:.2em;color:var(--ochre-deep)}
+.fmspots .ocard__pips{display:none}
+.fmspots .card__bar{margin:0 9px;color:rgba(201,139,51,.45);font-weight:300}
+.fmprice{flex-wrap:nowrap;align-items:baseline;gap:8px}
+.fmprice b{font-size:15px;font-weight:500;color:var(--navy);letter-spacing:.01em}
+.fmprice s{order:2;font-size:12.5px;font-weight:300;color:#8A8FA0;text-decoration:line-through;text-decoration-color:rgba(41,58,87,.55);text-decoration-thickness:1px}
+.fmcard.is-sold .fmspots__off{color:var(--muted)}
+@media (max-width:900px){
+  .fmcard .card__spec{flex-direction:column;align-items:flex-start;gap:6px}
+  .fmcard .card__spec .card__bar{display:none}
+  .fmspots{font-size:8.5px;letter-spacing:.16em}
+  .fmspots .card__bar{margin:0 6px}
+  .fmprice b{font-size:15px}.fmprice s{font-size:12px}
+}
+/* a little more presence: the gold line larger; the regular price at the same size as the Fork Monday price,
+   told apart by colour and weight alone, so the difference reads at a glance */
+.fmspots{margin-top:8px;font-size:11.5px;letter-spacing:.16em}
+.fmspots__off{font-weight:700}
+.fmspots .card__bar{margin:0 10px}
+.fmprice{gap:9px}
+.fmprice b{font-size:16px;font-weight:600}
+.fmprice s{font-size:16px;font-weight:300;color:#9198AB;text-decoration-color:rgba(41,58,87,.6);text-decoration-thickness:1.2px}
+@media (max-width:900px){
+  .fmspots{font-size:10px;letter-spacing:.13em}
+  .fmspots .card__bar{margin:0 7px}
+  .fmprice{gap:7px}
+  .fmprice b,.fmprice s{font-size:15px}
+}
+/* the add button (and "Sold out") in the bottom right corner of every card, level with the price line */
+@media (min-width:901px){
+  .products .card .card__meta>:last-child,.products .card .card__meta>.ocard__sold{top:auto;bottom:29px;transform:translateY(50%)}
+}
+/* in the bag, the stepper takes more room: the note steps aside so both prices stay whole */
+@media (min-width:901px){.fmcard.in-bag .card__spec>.card__m,.fmcard.in-bag .card__spec>.card__m+.card__bar{display:none}}
+/* phones: every fork between sections at the full size of the first (small ones read as specks on a phone) */
+@media (max-width:900px){
+  .has-fmfork:not(#fm-weddings) .fmfork{width:170px;padding:0 14px 0 12px;left:calc(var(--gutter) - 12px)}
+  .fmsec.has-fmfork:not(#fm-weddings){margin-top:40px}
+}
