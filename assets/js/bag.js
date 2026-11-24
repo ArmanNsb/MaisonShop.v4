@@ -159,7 +159,7 @@
   "price": "$3,900",
   "note": "Credit"
  },
- "Birthday Custom Cake": {
+ "Custom Cake": {
   "url": "#fm-cakes",
   "price": "$570",
   "note": "Credit"
@@ -182,7 +182,6 @@
  "Madeleine Tower": {
   "url": "product-madeleine-tower.html",
   "price": "$290",
-  "img": "assets/img/bag/hol-madeleine-d.jpg",
   "note": "Tower"
  },
  "Toot Tower, Pomegranate": {

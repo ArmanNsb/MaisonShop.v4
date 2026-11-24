@@ -121,3 +121,60 @@
   .has-fmfork:not(#fm-weddings) .fmfork{width:170px;padding:0 14px 0 12px;left:calc(var(--gutter) - 12px)}
   .fmsec.has-fmfork:not(#fm-weddings){margin-top:40px}
 }
+/* with two prices on the line there is no room for the "Add" word beside the seal: it rises above it instead */
+@media (hover:hover){
+  .fmcard .add--seal{position:relative}
+  .fmcard .add--seal .add__label{position:absolute;left:50%;bottom:100%;margin:0 0 7px!important;max-width:none!important;
+    transform:translate(-50%,4px);opacity:0;white-space:nowrap;padding-left:.24em;pointer-events:none;
+    transition:opacity .3s ease,transform .45s cubic-bezier(.2,.7,.2,1)!important}
+  .fmcard:hover .add--seal .add__label,.fmcard .add--seal:focus-visible .add__label{opacity:1;transform:translate(-50%,0)}
+}
+@media (hover:none){ .fmcard .add--seal .add__label{display:none!important} }
+
+/* ---- prices (chosen option D, without labels) ----
+   Both prices in Dahlia at the same size, so the difference reads at a glance: the regular price first, in a soft
+   slate, struck through by hand with a gold pen line (the hero ring's hand); the Fork Monday price in navy beside it.
+   The product's own label (Tower, 3 boxes…) sits above in small capitals; credits carry no label. Phone: one above
+   the other, so they never run into the + seal */
+.fmcard .card__spec{flex-direction:column;align-items:flex-start;gap:6px}
+.fmcard .card__spec .card__bar{display:none}
+.fmcard .card__m{font-size:10px;letter-spacing:.2em;text-transform:uppercase}
+.fmprice{display:flex;flex-direction:row;flex-wrap:nowrap;align-items:baseline;gap:18px}
+.fmprice s{order:0;font:400 24px/1 Dahlia,serif;letter-spacing:.01em;color:#5B6680;text-decoration:none;padding:0 2px;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 12' preserveAspectRatio='none'%3E%3Cpath d='M2 8.6 C 26 7.4 58 5.8 98 3.4' fill='none' stroke='%23C98B33' stroke-width='2.1' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") center 55%/100% 12px no-repeat}
+.fmprice b{order:1;font:400 24px/1 Dahlia,serif;letter-spacing:.01em;color:var(--navy,#293A57)}
+@media (max-width:900px){
+  .fmprice{flex-direction:column;align-items:flex-start;gap:5px}
+  .fmprice s{font-size:18px}
+  .fmprice b{font-size:22px}
+}
+/* "2 of 2 left" sits close under the product name, and the prices get more air above them */
+.fmcard .fmspots{margin-top:3px}
+.fmcard .card__meta{padding-top:20px}
+@media (max-width:900px){ .fmcard .fmspots{margin-top:3px} .fmcard .card__meta{padding-top:14px} }
+/* a short line in brackets under a product's name (Custom Cake: the occasions it is made for) */
+.fmcard .card__sub{margin:4px 0 0;font:400 13px/1.4 var(--text);letter-spacing:.01em;color:#6E7690}
+@media (max-width:900px){ .fmcard .card__sub{font-size:12px} }
+/* phone: the names line up at the top of every card in a row (the prices stay at the bottom), and the + seal sits
+   level with the Fork Monday price, centred on its figures */
+@media (max-width:900px){
+  .fmcard .card__name{margin-top:0}
+  .fmcard .card__meta{margin-top:auto}
+  .products .fmcard .card__meta>:last-child,.fmcard .card__meta>.buy{bottom:38.5px}
+}
+@media (min-width:901px){
+  .products .fmcard .card__meta>:last-child,.products .fmcard .card__meta>.ocard__sold{bottom:30.5px}
+}
+/* the shop's other cards on this page (sold out, the gift card) follow the same pattern as the offers: label in
+   small capitals above, price in Dahlia */
+.products .card:not(.fmcard) .card__spec{flex-direction:column;align-items:flex-start;gap:6px}
+.products .card:not(.fmcard) .card__spec .card__bar{display:none}
+.products .card:not(.fmcard) .card__m{font-size:10px;letter-spacing:.2em;text-transform:uppercase}
+.products .card:not(.fmcard) .card__price{font:400 24px/1 Dahlia,serif;letter-spacing:.01em;color:var(--navy,#293A57)}
+.products .card.is-sold:not(.fmcard) .card__price,.products .card:not(.fmcard):has(.add--sold) .card__price{color:#8A93A8}
+@media (max-width:900px){
+  .products .card:not(.fmcard) .card__price{font-size:22px}
+  /* phone: every card's name starts at the top, whatever the card */
+  .products .card .card__name{margin-top:0}
+  .products .card .card__meta{margin-top:auto}
+}

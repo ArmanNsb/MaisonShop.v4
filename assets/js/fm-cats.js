@@ -103,12 +103,9 @@
   document.querySelectorAll('.fmcat .pol, .fmsec .pol').forEach((p,i)=>{ const s=document.createElement('span'); s.className='pol__stamp'; s.setAttribute('aria-hidden','true'); s.innerHTML=svg(i); p.appendChild(s); });
 })();
 
-/* Fork Monday: the members band. The 30 gets a hand-drawn gold ring (as in the hero) and the button starts to
-   catch the light, once the band is well in view */
+/* Fork Monday: the members band. The button starts to catch the light once the band is well in view */
 (function(){
   const band=document.querySelector('.fmhow__members'); if(!band) return;
-  const g=band.querySelector('.fmhow__days .g');
-  if(g){ g.insertAdjacentHTML('beforeend','<svg class="fmring30" viewBox="0 0 100 70" aria-hidden="true"><path pathLength="1" d="M78 9 C56 1 14 4 6 32 C0 58 34 70 62 66 C90 62 102 44 95 25 C90 11 74 4 54 5"/></svg>'); }
   if(!('IntersectionObserver' in window)){ band.classList.add('is-lit'); return; }
   const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ band.classList.add('is-lit'); io.disconnect(); } }),{threshold:.55});
   io.observe(band);

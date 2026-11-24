@@ -158,18 +158,13 @@ html.fm-edit .fmhow .fmhow__step::before{transform:none;transition:none}
 }
 
 /* ---- the members band: a little more presence, kept quiet ----
-   the pointer becomes the gold hand-drawn fork; the 30 gets the same gold ring as the hero, drawn by hand when the
-   band comes into view; the button wears a fine gold frame and catches the light now and then */
+   the pointer becomes the gold hand-drawn fork; the button wears a fine gold frame and catches the light now and then */
 @media (hover:hover) and (pointer:fine){
   .fmhow__members,.fmhow__members a,.fmhow__members button{
     cursor:url("../img/fm/fork-cursor.png") 5 4,auto;
     cursor:-webkit-image-set(url("../img/fm/fork-cursor.png") 1x,url("../img/fm/fork-cursor-2x.png") 2x) 5 4,auto;
     cursor:image-set(url("../img/fm/fork-cursor.png") 1x,url("../img/fm/fork-cursor-2x.png") 2x) 5 4,auto}
 }
-.fmhow__days .g{position:relative;display:inline-block}
-.fmring30{position:absolute;left:-22%;top:-27%;width:144%;height:154%;overflow:visible;pointer-events:none}
-.fmring30 path{fill:none;stroke:#D9A85C;stroke-width:1.5;stroke-linecap:round;vector-effect:non-scaling-stroke;stroke-dasharray:1;stroke-dashoffset:1}
-.fmhow__members.is-lit .fmring30 path{stroke-dashoffset:0;transition:stroke-dashoffset 1.9s cubic-bezier(.62,.02,.32,1) .45s}
 
 .fmhow__cta{position:relative;overflow:hidden;outline:1px solid rgba(217,168,92,.5);outline-offset:6px;transition:background .35s,color .35s,border-color .35s,outline-offset .45s cubic-bezier(.2,.7,.2,1),outline-color .35s}
 .fmhow__cta:hover{outline-offset:3px;outline-color:rgba(245,233,229,.6)}
@@ -178,7 +173,6 @@ html.fm-edit .fmhow .fmhow__step::before{transform:none;transition:none}
 .fmhow__members.is-lit .fmhow__cta::after{animation:fmsheen 6.5s cubic-bezier(.45,.05,.3,1) 2.4s infinite}
 @keyframes fmsheen{0%{left:-60%;opacity:1}22%{left:130%;opacity:1}23%,100%{left:130%;opacity:0}}
 @media (prefers-reduced-motion:reduce){
-  .fmring30 path{stroke-dashoffset:0!important;transition:none!important}
   .fmhow__members.is-lit .fmhow__cta::after{animation:none}
 }
 /* the date cards a little larger */
@@ -190,3 +184,69 @@ html.fm-edit .fmhow .fmhow__step::before{transform:none;transition:none}
   .fmhow__when{font-size:10.5px}
 }
 @media (max-width:900px){ .fmhow__leaf{max-width:190px}.fmhow__days{font-size:46px} }
+
+/* ---- the profile button: the one action of the whole page ----
+   Made like a printed label from the Maison's world (an antique French label, the shape of an invitation card):
+   gold card with inward-curved corners, the cotton paper's grain printed through the gold, a fine navy frame
+   inset and following the corners, and the words in Dahlia at headline size, sentence case. On hover the card turns
+   to cream paper; the light still crosses it now and then. */
+.fmhow__cta{--n:15px;--i:7px;min-height:78px;padding:0 60px;font:400 29px/1 Dahlia,serif;letter-spacing:.005em;text-transform:none;
+  color:#293A57;border:0;outline:0;
+  background:#EEBB5E url("../img/fm/paper-tile.jpg") center/700px auto;background-blend-mode:multiply;   /* #EEBB5E x the paper = the brand ochre #E0A450, with its grain */
+  -webkit-mask:radial-gradient(circle at 0 0,#0000 var(--n),#000 calc(var(--n) + .5px)) 0 0/51% 51% no-repeat,
+    radial-gradient(circle at 100% 0,#0000 var(--n),#000 calc(var(--n) + .5px)) 100% 0/51% 51% no-repeat,
+    radial-gradient(circle at 0 100%,#0000 var(--n),#000 calc(var(--n) + .5px)) 0 100%/51% 51% no-repeat,
+    radial-gradient(circle at 100% 100%,#0000 var(--n),#000 calc(var(--n) + .5px)) 100% 100%/51% 51% no-repeat;
+  mask:radial-gradient(circle at 0 0,#0000 var(--n),#000 calc(var(--n) + .5px)) 0 0/51% 51% no-repeat,
+    radial-gradient(circle at 100% 0,#0000 var(--n),#000 calc(var(--n) + .5px)) 100% 0/51% 51% no-repeat,
+    radial-gradient(circle at 0 100%,#0000 var(--n),#000 calc(var(--n) + .5px)) 0 100%/51% 51% no-repeat,
+    radial-gradient(circle at 100% 100%,#0000 var(--n),#000 calc(var(--n) + .5px)) 100% 100%/51% 51% no-repeat}
+/* the inner frame: straight rules that give way at the corners to arcs round the same centres */
+.fmhow__cta::before{content:"";position:absolute;inset:var(--i);pointer-events:none;--r:calc(var(--n) + var(--i));--c:rgba(41,58,87,.55);
+  border:1px solid var(--c);
+  background:radial-gradient(circle at calc(-1*var(--i)) calc(-1*var(--i)),#0000 var(--r),var(--c) var(--r),var(--c) calc(var(--r) + 1px),#0000 calc(var(--r) + 1.2px)),
+    radial-gradient(circle at calc(100% + var(--i)) calc(-1*var(--i)),#0000 var(--r),var(--c) var(--r),var(--c) calc(var(--r) + 1px),#0000 calc(var(--r) + 1.2px)),
+    radial-gradient(circle at calc(-1*var(--i)) calc(100% + var(--i)),#0000 var(--r),var(--c) var(--r),var(--c) calc(var(--r) + 1px),#0000 calc(var(--r) + 1.2px)),
+    radial-gradient(circle at calc(100% + var(--i)) calc(100% + var(--i)),#0000 var(--r),var(--c) var(--r),var(--c) calc(var(--r) + 1px),#0000 calc(var(--r) + 1.2px));
+  background-origin:border-box;background-clip:border-box;
+  -webkit-mask:radial-gradient(circle at calc(-1*var(--i)) calc(-1*var(--i)),#0000 var(--r),#000 calc(var(--r) + .3px)) 0 0/51% 51% no-repeat,
+    radial-gradient(circle at calc(100% + var(--i)) calc(-1*var(--i)),#0000 var(--r),#000 calc(var(--r) + .3px)) 100% 0/51% 51% no-repeat,
+    radial-gradient(circle at calc(-1*var(--i)) calc(100% + var(--i)),#0000 var(--r),#000 calc(var(--r) + .3px)) 0 100%/51% 51% no-repeat,
+    radial-gradient(circle at calc(100% + var(--i)) calc(100% + var(--i)),#0000 var(--r),#000 calc(var(--r) + .3px)) 100% 100%/51% 51% no-repeat;
+  mask:radial-gradient(circle at calc(-1*var(--i)) calc(-1*var(--i)),#0000 var(--r),#000 calc(var(--r) + .3px)) 0 0/51% 51% no-repeat,
+    radial-gradient(circle at calc(100% + var(--i)) calc(-1*var(--i)),#0000 var(--r),#000 calc(var(--r) + .3px)) 100% 0/51% 51% no-repeat,
+    radial-gradient(circle at calc(-1*var(--i)) calc(100% + var(--i)),#0000 var(--r),#000 calc(var(--r) + .3px)) 0 100%/51% 51% no-repeat,
+    radial-gradient(circle at calc(100% + var(--i)) calc(100% + var(--i)),#0000 var(--r),#000 calc(var(--r) + .3px)) 100% 100%/51% 51% no-repeat;
+  transition:--c .3s}
+.fmhow__ctat{position:relative;top:.06em}   /* Dahlia sits a little high in the box */
+.fmhow__cta:hover{background:#fff url("../img/fm/paper-tile.jpg") center/700px auto;background-blend-mode:multiply;color:#293A57}   /* the bare cotton paper */
+.fmhow__cta:focus-visible::before{border-width:2px}
+@media (min-width:901px){ .fmhow__cta{min-width:420px} }
+@media (max-width:900px){ .fmhow__cta{--n:13px;--i:6px;min-height:68px;padding:0 28px;font-size:25px} }
+/* the button's words in white, given a little more body with a fine stroke of their own colour; on the cream hover
+   they turn navy */
+.fmhow__cta{color:#fff}
+.fmhow__ctat{top:-.065em;-webkit-text-stroke:.7px currentColor;paint-order:stroke fill}
+.fmhow__cta:hover{color:#293A57}
+/* desktop: the two date cards stand as tall as the text and button beside them, top and bottom lined up;
+   the dates sit in the middle of the space under the label */
+@media (min-width:901px){
+  .fmhow__members{align-items:stretch}
+  .fmhow__leaves{align-items:stretch}
+  .fmhow__leaf{display:flex;flex-direction:column}
+  .fmhow__leaf .fmhow__days{margin-top:auto}
+  .fmhow__leaf .fmhow__when{margin-bottom:auto;padding-bottom:4px}
+}
+/* the button stays gold (the brand ochre, the cotton grain printed through it), its inner frame navy and its words
+   navy with only a hair more weight and a touch more air between the letters; on hover it turns into a white card
+   with the frame in gold */
+.fmhow__cta{color:#293A57;letter-spacing:.03em}
+.fmhow__ctat{-webkit-text-stroke:.25px currentColor}
+.fmhow__cta:hover{color:#293A57;background:linear-gradient(rgba(255,255,255,.6),rgba(255,255,255,.6)),url("../img/fm/paper-tile.jpg") center/700px auto;background-blend-mode:normal}
+.fmhow__cta:hover::before{--c:#C98B33}
+/* "Members get two days of exclusive access." in Dahlia, the brand's display face, so it carries more */
+.fmhow__join p .lead{font:400 27px/1.25 Dahlia,serif;letter-spacing:0;margin-bottom:10px}
+@media (max-width:900px){ .fmhow__join p .lead{font-size:24px} }
+/* desktop: the column a little wider, so the Dahlia line stays on one line */
+@media (min-width:901px){ .fmhow__join p{max-width:470px} }
+.fmhow__join p .lead{text-wrap:balance}   /* phone: two even lines, never one word left alone */

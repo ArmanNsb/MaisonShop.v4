@@ -37,13 +37,13 @@
 @keyframes fmbloom{0%{opacity:0;transform:scale(.6)}35%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.15)}}
 @media (prefers-reduced-motion:reduce){.intro.is-intro .fmt p{opacity:1;filter:none;text-shadow:none;animation:none!important}.fmt p::before{display:none}}
 .fmt .h{text-wrap:balance;margin:0;font:400 clamp(30px,2.7vw,46px)/1.05 Dahlia;color:#293A57}
-.fmt .v{margin:.4em 0 0;font:400 clamp(22px,1.8vw,30px)/1 Dahlia;color:#C98B33}
+.fmt .v{margin:.4em 0 0;font:400 clamp(22px,1.8vw,30px)/1 Dahlia;color:#BE822E}
 .fmt .s{margin:1.1em 0 0;font-size:11px;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:#94692D}
 @media (max-width:900px){.fm{-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 6%,#000 94%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 6%,#000 94%,transparent 100%)}}
 .fm .n30{fill:#C98B33}
 .sv--title .sv-t1{display:block!important}.sv--title .sv-t2{display:none!important}
 @font-face{font-family:"Mrs Saint Delafield";src:url("../fonts/mrs-saint-delafield.woff2") format('woff2');font-display:block}
-.fm .script text{font-family:Dahlia,serif;fill:#C98B33}
+.fm .script text{font-family:Dahlia,serif;fill:#BE822E}   /* brand ochre, a touch deeper so it reads well on the paper; same as 'Save up to' */
 /* edit mode */
 .fme{position:absolute;inset:0;z-index:60;pointer-events:none}
 .fmbox{position:absolute;border:1.5px dashed #2F7BF6;background:rgba(47,123,246,.04);cursor:move;pointer-events:auto;touch-action:none}
@@ -102,13 +102,13 @@ html.fm-textmode .fmt p{animation:none!important;opacity:1!important;filter:none
 .fmguides b{position:absolute;top:50%;padding:3px 7px;border-radius:4px;background:#E0368A;color:#fff;font:600 11px/1.2 -apple-system,Helvetica,Arial,sans-serif;white-space:nowrap;letter-spacing:0;text-transform:none}
 .fmguides .l b{left:6px}.fmguides .r b{right:6px}
 /* "Save up to": the offer line of the lockup, set small and tracked in gold under the headline */
-@media (min-width:901px){.fmt .v{font:600 12px/1.4 var(--text);letter-spacing:.3em;text-transform:uppercase;color:#A97528}}
+@media (min-width:901px){.fmt .v{font:600 14.4px/1.4 var(--text);letter-spacing:.3em;text-transform:uppercase;color:#BE822E}}
 /* phone: the lifted page is one centred column, like the desktop lockup: Fork Monday, the line, the offer, then the strip */
 @media (max-width:900px){
   .fmt{text-align:center}
   .fmt .h{text-wrap:balance}
   .fmt .mbr{display:none}
-  .fmt .v{font:600 11px/1.4 var(--text);letter-spacing:.28em;text-transform:uppercase;color:#A97528}
+  .fmt .v{font:600 11.9px/1.4 var(--text);letter-spacing:.06em;text-transform:uppercase;color:#BE822E}
 }
 /* phone: the lockup above the strip is set left, on the page's margin, like an editorial cover line */
 @media (max-width:900px){.fmt{text-align:left}.fmt p{margin-left:0!important;margin-right:auto!important}.fmt .h{text-wrap:wrap}}
