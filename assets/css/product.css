@@ -930,3 +930,6 @@ p{margin:0}
   .hmore .card__spec{flex-direction:column;align-items:flex-start;gap:6px}
   .hmore .card__spec .card__bar{display:none}
 }
+/* card names a step larger (Nov 25), same style */
+@media (min-width:901px){ html body .card__name{font-size:15.4px} html body .hero__center .card__name{font-size:17px} html body .hmore .card--gift .card__name{font-size:16.8px} }
+@media (max-width:900px){ html body .card__name{font-size:15.9px} html body .hero__center .card__name{font-size:16.5px} html body .hero__col .card__name{font-size:12.3px} }

@@ -1,374 +1,196 @@
-# Maison De La Fork — Shop redesign (static front end)
+# Maison De La Fork — Shop page, Fork Monday edition
 
-A static front end for the Maison De La Fork online shop: the shop page, which opens with the Fork Monday (Cyber Monday, Nov 30) intro and offers, and one
-page for each product. It is plain HTML, CSS and JavaScript. There is **no build step, no framework and no package to
-install**: copy the folder to a web server and it works.
+This package is the **shop page only** (`index.html`) with everything it uses, latest version (25 Nov 2026; see CHANGES.md for the members-first locked view and the review switch).
+It replaces the shop page you put live before. The **product pages are not included**: you are building those.
 
-> **Important: this is a design build, not a working store.** The bag (cart) is a stand-in kept in the visitor's own
-> browser. Nothing is ordered or paid for. Before it can take orders it has to be connected to the real store
-> (WooCommerce on maisondelafork.com) for cart, prices, stock, checkout and payment. See
-> [Connecting to the store](#connecting-to-the-store).
+It is plain HTML, CSS and JavaScript: no build step, no framework, nothing to install. All paths are relative.
 
----
-
-## Contents
-
-1. [What is in the folder](#what-is-in-the-folder)
-2. [Putting it on a server](#putting-it-on-a-server)
-3. [Pages](#pages)
-4. [How it works](#how-it-works)
-5. [Editing content](#editing-content)
-6. [Connecting to the store](#connecting-to-the-store)
-7. [Browser support, accessibility, performance](#browser-support-accessibility-performance)
-8. [Before launch: checklist](#before-launch-checklist)
-9. [Product content to confirm](#product-content-to-confirm)
+> This is a design build. The bag (cart) is a stand-in kept in the visitor's browser (`localStorage`, key `mdlf-bag`);
+> nothing is ordered or paid. Cart, prices, stock and checkout still need to be connected to the real store.
 
 ---
 
-## What is in the folder
+## 1. Putting it live
 
-```
-index.html                         the shop page (Fork Monday intro and offers, Persian Cookie, Gift Box, Compose Your Own, Tea & Gift Cards)
-product-<slug>.html                one page per product (21 pages, listed below)
-product.html                       an old address; forwards to product-abrisham-collection.html
-product_content_manifest.json      where each product's copy came from, and what still needs confirming
-README.md                          this file
-.nojekyll                          only for GitHub Pages (lets it serve the files as they are); harmless elsewhere
+Upload the **contents** of this folder over the previous shop page, keeping the structure: `index.html` next to `assets/`.
+Files with the same path replace the old ones. Two old images are no longer used and can be deleted (optional):
+`assets/img/fm-pol-tables-d.jpg`, `assets/img/fm-pol-nursery-d.jpg`.
 
-assets/
-  css/
-    shop.css                       styles for index.html
-    product.css                    styles shared by every product page
-    header.css                     the compact header that slides in on scroll-up (every page)
-    bag.css                        the bag drawer (every page)
-    fm.css                         index.html: the Fork Monday intro (calendar photo, gold ink, headline)
-    fm-cats.css                    index.html: the Fork Monday offer categories (accordions, polaroids, offer rows)
-  js/
-    shop.js                        index.html: the bag store, product cards, choice pickers, the Holiday intro
-    product.js                     product pages: the bag store, gallery, quantity, sticky "Add to cart" bar
-    header.js                      the compact header (every page)
-    bag.js                         the bag drawer (every page)
-    fm.js                          index.html: Fork Monday intro (photo placement, marker ring and handwriting drawn by hand)
-    fm-cats.js                     index.html: Fork Monday categories (open/close, spots left, bag limit)
-  img/                             photos and artwork (about 24 MB)
-    bag/                           small square thumbnails used in the bag drawer
-    fm/                            Fork Monday intro: calendar photos (desktop, phone) and the gold ink layers
-    fm-pol-<category>-d/-m.jpg     Fork Monday polaroids: square for desktop, 3:2 for phones
-  fonts/
-    dahlia.otf                     Dahlia, the display typeface (headings)
-```
+On GitHub: open the repository's **root**, *Add file → Upload files*, drop `index.html` **and** the `assets` folder
+together, commit. (Uploading `assets` from inside `assets/` would create `assets/assets/…`.)
 
-Every page loads, in this order:
+Make sure the server sends `.webp` as `image/webp` (most do).
+
+---
+
+## 2. What changed since the Holiday shop page
+
+**New files**
+
+| File | What it does |
+|---|---|
+| `assets/css/fm.css` | Fork Monday intro: calendar, fork, headline |
+| `assets/css/fm-how.css` | "How it works" section and the navy members band |
+| `assets/css/fm-cats.css` | Gold fork dividers between sections, polaroid/stamp styles |
+| `assets/css/fm-shop.css` | Fork Monday product cards: two prices, "x of y left", sold-out state |
+| `assets/js/fm.js` | Fork Monday intro: the paper lift, the calendar strip that glides from 26 to 30 Nov, the ring round the 30, the two-step headline on desktop |
+| `assets/js/fm-cats.js` | Stock lines ("2 of 3 left"), bag limit, fork dividers, members band |
+| `assets/img/fm/strip-ink.webp`, `strip-top.webp` | Calendar strip (desktop): printed gold days 26–30, small forks on the lines |
+| `assets/img/fm/strip-ink-m.webp`, `strip-top-m.webp` | The same, cropped for phones |
+| `assets/img/fm/paper-tile.jpg` | Seamless cotton paper that slides with the strip |
+| `assets/img/fm/ring30.webp` | The printed gold ring round the 30 (revealed by a pen stroke) |
+| `assets/img/fm/fork-d.webp`, `fork-d-shadow.webp`, `fork-m.webp`, `fork-m-shadow.webp` | The vintage fork and its shadow (multiply), desktop and phone |
+| `assets/img/fm/cal-*-base.webp`, `cal-*-ring.webp` | Earlier calendar photos, kept as a fallback |
+| `assets/img/fm/fork-cursor.png`, `fork-cursor-2x.png` | Fork-shaped pointer over the members band |
+| `assets/img/fm-fork-divider.png` | Hand-drawn gold fork on the lines between sections |
+| `assets/img/fm-*.jpg` | Photos on the Fork Monday cards |
+
+**Changed files:** `index.html`, `assets/js/bag.js` (prices and new products in `CATALOG`), plus the shared
+`shop.css`, `bag.css`, `header.css`, `shop.js`, `header.js` as included here.
+
+Stylesheet / script order in `index.html` (keep it):
 
 ```html
-<link rel="stylesheet" href="assets/css/shop.css">      <!-- or product.css on product pages -->
+<link rel="stylesheet" href="assets/css/shop.css">
 <link rel="stylesheet" href="assets/css/bag.css">
 <link rel="stylesheet" href="assets/css/header.css">
-...
-<script src="assets/js/shop.js"></script>               <!-- or product.js -->
+<link rel="stylesheet" href="assets/css/fm.css">
+<link rel="stylesheet" href="assets/css/fm-cats.css">
+<link rel="stylesheet" href="assets/css/fm-shop.css">
+<link rel="stylesheet" href="assets/css/fm-how.css">
+…
+<script src="assets/js/shop.js"></script>     <!-- creates the bag store first -->
+<script src="assets/js/fm.js"></script>
+<script src="assets/js/fm-cats.js"></script>
 <script src="assets/js/header.js"></script>
 <script src="assets/js/bag.js"></script>
 ```
 
-The order of the scripts matters: `shop.js` / `product.js` create the bag store that the other two use.
+---
 
-All paths are **relative**, so the site works at the root of a domain, in a sub-folder (e.g. `/shop/`) or on a test domain
-without changes.
+## 3. The page, top to bottom
 
-**External resources** (the only things not in the folder):
-- the **KoHo** typeface from Google Fonts (`fonts.googleapis.com`, `fonts.gstatic.com`), used for all body text;
-- links out to maisondelafork.com (menu, footer, contact), social networks and press articles.
+1. **Fork Monday intro** (`<section class="intro">`). The blue paper with the oval window lifts on scroll to show a
+   paper calendar strip with a vintage fork. The strip glides slowly between 26 and 30 Nov (all five days printed in gold);
+   each time the 30 arrives a gold ring is drawn round it. On desktop, "Fork Monday" first stands alone above the strip;
+   on the next scroll the headline "Our most special prices, once a year only." and "Save up to $2,500" rise under it as
+   How it works comes in. On phones the three lines sit together. With "reduce motion" on, the strip rests on the 30
+   with the ring shown.
+2. **How it works** (`#fm-how`): three steps and the navy members band (Members first 26–27 Nov, Open to everyone
+   28–30 Nov, **Create my profile**).
+3. **Fork Monday sections**: `#fm-weddings` (Wedding Services), `#fm-tables` (Tables & Events), `#fm-cakes`
+   (Custom Cakes), `#fm-nursery` (Maison Nursery), `#fm-towers` (Towers). Same layout as the shop sections.
+4. **Shop sections**: `#sweets` (Persian Cookie), `#gifts` (Gift Box), `#compose` (Compose Your Own),
+   `#gifting` (Tea & Gift Cards), then the story, service row and footer.
+
+A gold fork sits on the line above each section from Wedding Services to Gift Box.
 
 ---
 
-## Putting it on a server
+## 4. Product cards with a Fork Monday price
 
-### Any web server (Apache, Nginx, IIS, a CDN or static host)
-
-1. Upload the **contents** of the folder (not the folder itself) to the web root or to the sub-folder you want, keeping
-   the structure exactly as it is. `index.html` must sit next to the `assets` folder.
-2. Open the address in a browser. That is all: there is nothing to compile, install or configure.
-
-Recommended server settings (all optional, the site works without them):
-
-- **HTTPS.**
-- **Compression** (gzip or Brotli) for `.html`, `.css`, `.js`, `.json`, `.svg`. The CSS and HTML compress very well.
-- **Caching.** Images and fonts can be cached for a long time (e.g. 30 days). Keep HTML short (or `no-cache`) so content edits
-  show up at once. CSS and JS files are not versioned by name, so give them a short cache (e.g. 1 hour) or add a version to
-  their links when you change them (`assets/css/shop.css?v=2`).
-- **MIME types.** Make sure `.webp` is served as `image/webp` and `.otf` as `font/otf` (most servers already do).
-
-Example for **Nginx**:
-
-```nginx
-location ~* \.(jpg|jpeg|png|webp|svg|otf)$ { expires 30d; add_header Cache-Control "public"; }
-location ~* \.(css|js)$                   { expires 1h; }
-location ~* \.html$                         { add_header Cache-Control "no-cache"; }
-gzip on;
-gzip_types text/css application/javascript application/json image/svg+xml;
-```
-
-Example `.htaccess` for **Apache**:
-
-```apache
-<IfModule mod_expires.c>
-  ExpiresActive On
-  ExpiresByType image/jpeg "access plus 30 days"
-  ExpiresByType image/png  "access plus 30 days"
-  ExpiresByType image/webp "access plus 30 days"
-  ExpiresByType font/otf   "access plus 30 days"
-  ExpiresByType text/css   "access plus 1 hour"
-  ExpiresByType application/javascript "access plus 1 hour"
-</IfModule>
-<IfModule mod_deflate.c>
-  AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json image/svg+xml
-</IfModule>
-AddType image/webp .webp
-AddType font/otf .otf
-```
-
-### GitHub Pages
-
-Upload the contents of the folder to the root of a repository (include the hidden `.nojekyll` file), then
-**Settings → Pages → Deploy from a branch → `main` / `(root)`**. The site appears at
-`https://<user>.github.io/<repository>/` after a minute.
-
-### Running it on your own computer
-
-```
-cd path/to/this/folder
-python3 -m http.server 8000
-```
-
-then open http://localhost:8000. Double-clicking `index.html` also works.
-
----
-
-## Pages
-
-| File | What it is |
-|---|---|
-| `index.html` | The shop page. Sections in order: Fork Monday intro, the Fork Monday categories (`#fm-weddings`, `#fm-tables`, `#fm-cakes`, `#fm-nursery`, `#fm-towers`), Persian Cookie (`#sweets`), Gift Box (`#gifts`), Compose Your Own (`#compose`), Tea & Gift Cards (`#gifting`), the Maison story, service row, footer. |
-| `product-<slug>.html` | One page per product: gallery, name, price, description, choice (where there is one), quantity and Add to cart (or Enquire), size / allergens / delivery, related products. |
-| `product.html` | Old address of the first sample page; redirects to `product-abrisham-collection.html`. Keep it so old links still work. |
-
-The 21 product pages are listed, with their status, in [Product content to confirm](#product-content-to-confirm).
-
----
-
-## How it works
-
-### The bag (cart) — `window.MDLFBag`
-
-Defined at the top of `shop.js` and `product.js` (the same code in both). It keeps the bag as `{ "line name": quantity }` in the
-browser's `localStorage` under the key **`mdlf-bag`**, so it survives page changes and reloads, **in that browser only**.
-
-```js
-MDLFBag.get(name)          // quantity of a line (0 if not in the bag)
-MDLFBag.set(name, qty)     // set a quantity (0 removes the line); repaints everything that listens
-MDLFBag.on(fn)             // fn(name) is called after every change
-MDLFBag.items()            // a copy of the whole bag
-MDLFBag.total()            // number of pieces in the bag
-```
-
-A product with a choice is **one line per choice**, named `Product · Choice` (with a middle dot), e.g. `Lattice Pie · Apple`,
-`Noon Berenji · Botanical`. The header bag shows the total with an ochre badge.
-
-Everything else in the interface (cards, product pages, drawer, header) only talks to the bag through these five functions, so
-connecting the real cart means replacing this one object (see [Connecting to the store](#connecting-to-the-store)).
-
-### Shop page cards (`index.html`, `shop.js`)
-
-Each product is a plain `<article class="card">` in the HTML: photo, a close-up shown on hover (`*-d.jpg`), name, a note or a
-choice, the price, and the add button.
-
-- **Add button.** A blind-embossed circle with a plus. Adding turns it into an ochre wax seal with the quantity on it, with small
-  plus / minus buttons beside it. Back at zero the emboss returns. The photo shows an "In bag" tag.
-- **Choices** (Lattice Pie: Pumpkin / Berries / Apple; Pigeon Pie: Chicken / Turkey; Toot Tower: Pomegranate / Pastel Almond;
-  Noon Berenji: Botanical / Yamatsu Red Roses / Portuguese Vintage Tile). A small picker in place of the card's note opens a
-  menu. The first option is pre-selected, so Add always works in one tap. Keyboard: arrows, Enter, Escape.
-- **Phone-only copies.** Four cards in the Holiday Collection (Lattice Pie, Pigeon Pie, Special Gift Box, Madeleine Tower)
-  appear twice in the HTML: once inside the intro's grid (desktop) and once, marked `class="card m-only"`, in the grid that
-  follows it (phones). Only one copy is ever visible. **When you edit one, edit both.**
-- **Special Gift Box** is shown both in the Holiday Collection and under Gift Box. It is the same product (one bag line).
-
-### Product pages (`product.js`)
-
-Each page names its product on the `<body>`:
+Every product in the campaign has, under its name:
 
 ```html
-<body data-product="Walnut">
+<article class="card fmcard ocard" data-total="5" data-left="5">
+  …
+  <p class="fmspots"><span class="ocard__left">5 of 5 left</span></p>
+  <div class="card__meta">
+    <span class="card__spec"><span class="card__price fmprice"><b>$105</b><s>$132</s></span></span>
+    <span class="add add--sold ocard__sold">Sold out</span>
+    <div class="buy" data-key="Abrisham Collection">…</div>
+  </div>
+</article>
 ```
 
-`product.js` uses that name as the line in the bag, so it must match the name used on the shop page and in `bag.js`.
+- **Stock.** `data-total` = quantity for sale (from the client's sheet); `data-left` = what is left.
+  `fm-cats.js` writes "**left of total left**" and, at 0, switches the card to **Sold out**.
+  The bag will not take more than `data-left`. **To connect real stock, set `data-left` from the store** (or call the
+  same logic after updating it). Today `data-left` equals `data-total`.
+- **Prices.** `<b>` is the Fork Monday price (navy), `<s>` the regular price, shown first and struck through by hand in
+  gold; both in the Dahlia face.
+- **Labels.** Piece counts, "Gluten-free", "Vegan", "3 boxes", "12 cakes" stay above the prices; "Credit", "Tower",
+  "Large" and "Small" are not shown.
+- **Add.** On desktop "ADD" appears above the round button on hover; on phones only the button shows.
+- Service items (Sofreh, tables, cakes, nursery) are bought as a **credit**. The terms are explained in How it works,
+  not on each card.
+- **Custom Cake** has a line under its name: "(Birthday, Anniversary, Bridal Shower)".
 
-- Gallery with thumbnails (desktop) or swipe and dots (phones), arrows and keyboard.
-- Quantity stepper and **Add to cart**; a slim bar with the product and **Add to cart** follows the visitor once the main button
-  has scrolled out of view (phones).
-- Pages with a choice (Lattice Pie, Pigeon Pie, Noon Berenji, Toot Tower) have a native `<select id="pdp-option">`, dressed as a
-  designed menu by a small script **inside that page** (marked `/* this page only */`). The `<select>` stays the source of truth.
-  On Lattice Pie and Pigeon Pie each choice has its own description and allergens (`window.PDP_OPTS` in the page); on Noon Berenji
-  and Toot Tower the choice turns the gallery to the matching photo.
-- Holiday products (Lattice Pie, Pigeon Pie, Toot Tower, Madeleine Tower, Green Bean Casserole, Rainbow Potato Gratin) show
-  **Enquire about this item** (to the contact page) instead of Add to cart, while prices and ordering are being confirmed.
-- Gift Card and the two Compose Your Own boxes link to the live site, where they are personalised and paid.
+### Campaign data on the page
 
-### Compact header (`header.js`, `header.css`)
+Prices are rounded down to whole dollars, as asked by the client (e.g. $105.60 → $105), so a few differ by cents from
+the "Campaign Price" column of the sheet.
 
-`header.js` copies the page's own header into a fixed bar at the top of the window. Scrolling **down**, it stays out of the way;
-scrolling **up** a little, it slides down with the logo, menu and bag (its count kept in step), so the bag is always one small
-scroll away. On the shop page it only starts after the Holiday intro; on product pages, once the normal header has scrolled out of
-view. It holds still while the bag drawer is open. Because it is a copy, any change to the page's header appears in it too.
+| Section | Product | Regular | Fork Monday | Qty |
+|---|---|---|---|---|
+| Wedding Services | Sofreh Aghd | $8,000 | $6,800 | 2 |
+| | Destination Sofreh Aghd | $12,000 | $9,500 | 1 |
+| | Wedding Cake | $3,500 | $2,900 | 2 |
+| Tables & Events | Dessert Table | $8,000 | $6,800 | 2 |
+| | Dinner Table | $5,000 | $3,900 | 1 |
+| Custom Cakes | Custom Cake | $650 | $570 | 4 |
+| Maison Nursery | Baby Shower | $8,000 | $6,800 | 2 |
+| | Custom Birthday Cake | $1,000 | $850 | 3 |
+| | One Sweet First Year | $1,800 | $1,260 | 2 |
+| Towers | Madeleine Tower | $350 | $290 | 2 |
+| | Toot Tower, Pomegranate | $230 | $190 | 2 |
+| | Toot Tower, Pastel Almond | $230 | $190 | 2 |
+| Persian Cookie | Abrisham Collection | $132 | $105 | 5 |
+| | Diba Collection | $101 | $80 | 5 |
+| | Pansy Cookie | $101 | $80 | 5 |
+| | Noon Berenji | $112 | $89 | 5 |
+| | Toot | $62 | $49 | 5 |
+| | Pa-Derazi | $79 | $63 | 5 |
+| | Walnut | $87 | $69 | 5 |
+| | Coconut Macaroon | $87 | $69 | 5 |
+| | Calisson | $72 | $57 | 5 |
+| Gift Box | Special Gift Box | $300 | $255 | 3 |
+| Tea & Gift Cards | Rumi Blend | $25 | $18 | 5 |
 
-### Bag drawer (`bag.js`, `bag.css`)
+Not in the campaign (regular price, unchanged): Noon Berenji Pinkland (sold out), Compose Your Own boxes, Gift Card.
 
-A drawer slides in from the right on every page.
+Each price also appears in `CATALOG` in `assets/js/bag.js` (the bag drawer reads it). Keep the two in step.
 
-- **Hover** over the bag icon (mouse only): it peeks in, and goes again when the pointer leaves both the icon and the drawer.
-- **Click / tap** the bag icon: it opens and stays. The page behind dims under a warm navy shade and stops scrolling; focus stays
-  inside; Escape, the close button, a click on the shade or "Continue shopping" closes it.
-- **Something new is added**: it peeks in with that line highlighted and steps back after about 4 seconds (unless the pointer or
-  focus is inside it).
+---
 
-Each line shows a thumbnail, the name, the choice, a quantity stepper, Remove and the line price. The foot shows the subtotal.
-Products whose price reads "Price to come" are left out of the subtotal, and a note says so.
+## 5. Links to product pages (yours to build)
 
-The drawer needs to know each product's page, thumbnail and price. That information is in the **`CATALOG`** object at the top of
-`bag.js`:
+Cards link to these addresses; create a page at each, or change the `href`s in `index.html` and the `url`s in
+`CATALOG` (`bag.js`) to your own:
 
-```js
-"Walnut": { "url": "product-walnut.html", "img": "assets/img/bag/walnut-c-d.jpg", "price": "$87", "note": "24 pieces" },
+```
+product-abrisham-collection.html   product-diba-collection.html   product-pansy-cookie.html
+product-noon-berenji.html          product-noon-berenji-pinkland.html
+product-toot.html                  product-pa-derazi.html          product-walnut.html
+product-coconut-macaroon.html      product-calisson.html
+product-special-gift-box.html      product-rumi-blend.html         product-gift-card.html
+product-custom-small-box.html      product-custom-large-box.html
+product-madeleine-tower.html       product-toot-tower.html  (both Toot Tower cards)
 ```
 
-Keep it in step with the cards. **Checkout** is not connected yet: it only shows a short note.
-
-### Fork Monday (`fm.js`, `fm-cats.js`)
-
-The page opens on the same paper, oval window, crest and cupid. Scrolling lifts the paper onto a photographed calendar
-strip with a silver fork; the 30 is circled in gold marker and "Fork Monday" is handwritten, both drawn stroke by stroke at
-hand speed. The headline reads "Our rarest prices, one day only" / "Save up to $3,750" / "10–15% off weddings, tables & cakes".
-Scrolling on leads into five categories, closed by default: each shows a polaroid and opens on click to its offers. Credit
-offers show "You pay / You get"; other offers show the struck regular price. Spots left are shown, and the bag will not take
-more than the spots left. With "reduce motion" on, the ink appears at once.
-
-Still to confirm with the client: prices marked "to be confirmed", credit terms and expiry, the campaign timing, and the
-Special Order section at the end of the page.
-
-### Holiday intro (older, `shop.js`, "Holiday intro" section; no longer shown)
-
-The shop page opens on a sheet of brand-blue paper with an oval window onto the Toot Tower, the crest printed around it. The
-visitor's scroll lifts the paper; the page then rests on a short introduction (the tower stays, a bauble rolls in against its bowl,
-the text and order dates appear); one more scroll brings up the Holiday Collection grid. Scrolling up returns step by step.
-The tower never moves or changes size between the stages on desktop; on phones it glides into its tile in the grid.
-
-The artwork is in `assets/img`: `paper-tile.jpg`, `paper-window.png`, `paper-shadow.png`, `frame-print2.png` (desktop) and
-`frame-print-m.png` (phones), `maison-line.png`, `title-main.png` / `title-main-2.png`, `cupid-print.png`, `tower-*`,
-`hol-ornament*`. With "reduce motion" switched on in the visitor's system, the grid is shown directly, without the animation.
-
-### Breakpoints
-
-Phones up to **640 px**; tablets **641–900 px** (some grids switch at 860 px); desktop from **901 px**. Hover effects only apply on
-devices with a mouse; on touch screens the controls keep a 44 px touch area.
+The Fork Monday service cards (Sofreh, tables, cakes, nursery) have **no link yet**. Their descriptions are in the
+client's document; once you build those pages, link the cards (`card__media` and `card__name` in `index.html`) and
+add a `url` to their `CATALOG` entries in `bag.js`.
+`product-lattice-pie.html` and `product-pigeon-pie.html` are only linked from hidden Holiday cards still in the HTML.
 
 ---
 
-## Editing content
+## 6. Still to do / to confirm
 
-There is no admin panel or template: content is edited directly in the HTML.
-
-**Change a price.** A product's price appears in several places; change all of them:
-1. its card in `index.html` (`<span class="card__price">`), **twice** for the four phone-only copies listed above;
-2. its own product page: the price under the name (`buyc__price`) and the sticky bar at the bottom (`sbar__t`);
-3. related-product cards on other product pages (search the HTML files for the product's page name, e.g. `product-walnut.html`);
-4. `CATALOG` in `assets/js/bag.js`.
-
-**Change a name.** As above, and also the `data-product="…"` on its product page's `<body>` and the `data-key="…"` on its card's
-add button in `index.html`. Bags saved under the old name keep it until emptied.
-
-**Change a photo.** Replace the file in `assets/img` with one of the same name and proportions. Each card photo has a close-up
-for hover with `-d` added to its name (e.g. `walnut-c.jpg` and `walnut-c-d.jpg`): replace both. The drawer uses a 192 × 192 px
-square copy in `assets/img/bag/`.
-
-**Add a product.** Copy an existing card in `index.html` and a similar product page, change the text, links, photos and
-`data-product`, and add an entry to `CATALOG` in `bag.js`.
-
-**Header and footer.** They are repeated in every HTML file. A change has to be made in all 22 pages (search and replace), or the
-pages moved into the store's own templates.
+- **Create my profile** button links to `#create-profile` (placeholder): set the real sign-up URL.
+- **Members first (26–27 Nov)**: the page shows the locked members' view to visitors who are not signed in (see CHANGES.md).
+  The store must tell the page who is a member (`window.FM_MEMBER`) and charge non-members the regular price.
+- **Review switch**: remove `window.FM_REVIEW=true` from `index.html` and `product-sofreh-aghd.html` before launch.
+- All Fork Monday cards now have photos (4:3).
+- Client notes still open in the sheet: Pinkland restock.
+- The bag's note about items "priced on confirmation" still says "Holiday"; it only shows when such an item is in the bag.
 
 ---
 
-## Connecting to the store
+## 7. Notes
 
-The quickest route is to keep this front end and replace the bag store with calls to WooCommerce:
-
-1. Replace `window.MDLFBag` (top of `shop.js` and `product.js`) with an object that has the same five functions (`get`, `set`,
-   `on`, `items`, `total`) but reads and writes the WooCommerce cart (for example through the WooCommerce Store API,
-   `/wp-json/wc/store/v1/cart`). Map each line name (`Product · Choice`) to a product and variation ID.
-2. Point **Checkout** in `bag.js` (`.js-checkout`) to the store's checkout page.
-3. Take prices, stock and "sold out" from the store rather than the HTML (or render these pages from WooCommerce templates using
-   the same markup and CSS).
-4. Wire up **Search**, the **account** icon and the **newsletter** form in the footer (currently not connected).
-
-Alternatively, the HTML, CSS and JS can be moved into a WordPress theme; all class names are self-contained and the CSS does not
-depend on any framework.
-
----
-
-## Browser support, accessibility, performance
-
-- **Browsers:** current Chrome, Safari (macOS and iOS), Firefox and Edge. Uses modern CSS (grid, `inset`,
-  `aspect-ratio`) and plain ES2017 JavaScript. Internet Explorer is not supported.
-- **Accessibility:** buttons and links are real `<button>` / `<a>` elements with labels; the choice menus are listboxes over native
-  selects; the bag drawer is a dialog that holds focus and closes with Escape; animations are switched off for visitors who ask
-  their system to reduce motion; touch targets are at least 44 px.
-- **Performance:** no frameworks; each product page is about 15 KB of HTML plus shared CSS/JS that the browser caches.
-  Images are the bulk (about 24 MB in total, loaded lazily as the visitor scrolls). Before launch it is worth compressing them:
-  the largest are `frame-print2.png` (2 MB), `title-main.png`, `title-main-2.png`, `paper-window.png` and the 1000 × 1250 px
-  product gallery photos; lossless PNG optimisation and WebP versions would cut the total considerably.
-
----
-
-## Before launch: checklist
-
-- [ ] Connect the bag, Checkout, Search, account and newsletter to the store (see above).
-- [ ] Confirm the product content flagged below: prices (several Holiday items say "Price to come"; check that **Madeleine
-      Tower $35** is right), contents, allergens, availability.
-- [ ] Holiday order-by dates on the shop page (Thanksgiving Nov 23, Christmas Dec 18).
-- [ ] Main Course I–III and Side Dish I–II in the Holiday Collection are placeholders (no page, no price, no add button).
-- [ ] Compress images (see Performance).
-- [ ] Check that the licence for the **Dahlia** typeface covers web use.
-- [ ] Add page metadata for sharing (Open Graph image and description) if wanted; titles and meta descriptions are already set.
-- [ ] Set up HTTPS, compression and caching on the server.
-
----
-
-## Product content to confirm
-
-`product_content_manifest.json` records, for each product, where its copy came from and what still needs a decision.
-
-| Page | Category | Status | To confirm |
-|---|---|---|---|
-| [Lattice Pie](product-lattice-pie.html) | Holiday Collection | `price_tbd` | Copy from client (Nov 2026). Price TBD. |
-| [Pigeon Pie](product-pigeon-pie.html) | Holiday Collection | `price_tbd` | Copy from client (Nov 2026). Price TBD. |
-| [Toot Tower](product-toot-tower.html) | Holiday Collection | `preview_sale` | Price $230 from client (Nov 2026). Height on page still from the historic listing (approx. 10 in). |
-| [Madeleine Tower](product-madeleine-tower.html) | Holiday Collection | `preview_sale` | Price $35 and size 7 × 15 in from client (Nov 2026). |
-| [Pansy Cookie](product-pansy-cookie.html) | Persian Cookie | `normal` |  |
-| [Noon Berenji](product-noon-berenji.html) | Persian Cookie | `normal` | The client description is specifically Botanical; other pattern options are shown in the original site, but do not have separate verified copy. |
-| [Noon Berenji, Pinkland](product-noon-berenji-pinkland.html) | Persian Cookie | `sold_out` |  |
-| [Toot](product-toot.html) | Persian Cookie | `normal` |  |
-| [Pa-Derazi](product-pa-derazi.html) | Persian Cookie | `normal` |  |
-| [Walnut](product-walnut.html) | Persian Cookie | `normal` | Contains dairy and nuts per official listing. |
-| [Coconut Macaroon](product-coconut-macaroon.html) | Persian Cookie | `normal` |  |
-| [Calisson](product-calisson.html) | Persian Cookie | `normal` | Official listing: refrigerate airtight and enjoy within six weeks. |
-| [Special Gift Box](product-special-gift-box.html) | Assortments | `normal` | The official product detail page could not be fetched; only the product name/price and the three-box label in the redesign are verified. No contents or allergens invented. |
-| [Abrisham Collection](product-abrisham-collection.html) | Assortments | `normal` |  |
-| [Diba Collection](product-diba-collection.html) | Assortments | `normal` |  |
-| [Rumi Blend](product-rumi-blend.html) | Tea & Gift Cards | `normal` |  |
-| [Gift Card](product-gift-card.html) | Tea & Gift Cards | `external` |  |
-| [Custom Small Box](product-custom-small-box.html) | Compose Your Own | `external` | Official site examples per row: Pansy 9, Rice 8, Pa-Derazi 4, Walnut 4, Coconut 5. |
-| [Custom Large Box](product-custom-large-box.html) | Compose Your Own | `external` | Official site examples per row: Pansy 12, Rice 12, Pa-Derazi 8, Walnut 6, Coconut 5. |
-| [Green Bean Casserole with Brie](product-green-bean-casserole-with-brie.html) | Holiday Collection | `price_tbd` | Copy from client (Nov 2026). Price TBD. |
-| [Rainbow Potato Gratin](product-rainbow-potato-gratin.html) | Holiday Collection | `price_tbd` | Copy from client (Nov 2026). Price TBD. |
-
-Status: `normal` regular product; `price_tbd` price not set yet; `preview_sale` seasonal item shown ahead of confirmation;
-`sold_out` shown as sold out; `external` personalised and paid on the live site.
+- Breakpoints: phones ≤ 900 px use the phone layout and the phone calendar photo; desktop from 901 px.
+- Hover effects (fork pointer, ADD label, photo close-ups) only apply with a mouse.
+- `window.FM_EDIT` / `window.FM_STATES` are review switches used only in the design preview and editor files; they are
+  off on the real page. Nothing to do.
+- External: the KoHo font from Google Fonts; links to maisondelafork.com, social networks and press.

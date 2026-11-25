@@ -135,7 +135,7 @@
   };
   /* FM-CATALOG */ Object.assign(CATALOG,{
  "Sofreh Aghd": {
-  "url": "#fm-weddings",
+  "url": "product-sofreh-aghd.html",
   "price": "$6,800",
   "note": "Credit"
  },

@@ -303,3 +303,4 @@
 .fmcat .fmcat__head .pol figcaption{text-align:left;padding-left:6%;padding-right:36%;white-space:nowrap}
 @media (min-width:901px){.fmcat .fmcat__head .pol figcaption{font-size:17.5px;padding-left:5%}.fmcat .fmcat__head .pol__stamp{width:37%;right:-8%}}
 @media (max-width:900px){.fmcat .fmcat__head .pol figcaption{padding-left:4%;padding-right:30%}}
+.fmstates--solo{bottom:14px}

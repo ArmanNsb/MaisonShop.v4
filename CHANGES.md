@@ -1,47 +1,50 @@
-# Fork Monday shop page — update 9 (24 Nov 2026)
+# Fork Monday shop page — update 10 (25 Nov 2026)
 
-Changes on top of the shop page package you already have (`maison-shop-fork-monday.zip`).
+Changes on top of the full package you have (`maison-shop-fork-monday-final.zip`, 24 Nov).
 Upload the **contents** of this folder over it, keeping the structure (`index.html` next to `assets/`).
-Files with the same path replace the old ones. Product pages are not included.
+Files with the same path replace the old ones.
 
 ## Updated files (replace)
 - `index.html`
-- `assets/css/fm.css`
-- `assets/css/fm-how.css`
-- `assets/css/fm-shop.css`
-- `assets/js/fm.js`
-- `assets/js/fm-cats.js`
-- `assets/js/bag.js`
+- `assets/css/shop.css` (card names a step larger)
+- `assets/css/fm-cats.css`, `assets/css/fm-shop.css`
+- `assets/js/fm-cats.js`, `assets/js/bag.js`
 
 ## New files (add)
-Hero calendar strip (printed gold days, ring round the 30, small forks, paper that slides with the dates):
-- `assets/img/fm/strip-ink.webp`, `assets/img/fm/strip-top.webp` (desktop)
-- `assets/img/fm/strip-ink-m.webp`, `assets/img/fm/strip-top-m.webp` (phone)
-- `assets/img/fm/ring30.webp`
-- `assets/img/fm/paper-tile.jpg`
-- `assets/img/fm/fork-d.webp`, `assets/img/fm/fork-d-shadow.webp` (desktop fork and its shadow)
-- `assets/img/fm/fork-m.webp`, `assets/img/fm/fork-m-shadow.webp` (phone fork and its shadow)
+- `product-sofreh-aghd.html` — the **sample** Fork Monday service page (Sofreh Aghd). Its card on the shop links to it.
+  The other eight services have no page yet and their cards are not linked.
+- `assets/css/product.css`, `assets/js/product.js` — the product-page styles and script (the same ones your product pages
+  use; this copy also has the larger card names). If you already have them on the server, replace them.
+- `assets/css/fm-pdp.css`, `assets/js/fm-pdp.js` — Fork Monday additions for the service page.
+- `assets/img/fm-pdp-sofreh-aghd.jpg` — its photograph.
 
-Product card photos:
-- `assets/img/fm-destination-sofreh.jpg` (Sofreh Aghd)
-- `assets/img/fm-wedding-cake.jpg`
-- `assets/img/fm-dessert-table.jpg`
-- `assets/img/fm-dinner-table.jpg`
-- `assets/img/fm-baby-shower.jpg`
-- `assets/img/fm-custom-birthday-cake.jpg`
-- `assets/img/fm-one-sweet-year.jpg`
-- `assets/img/madeleine-p1.jpg` (Madeleine Tower; the same photo as its product page, so it may already be on the server)
+## What changed
 
-## No longer used (can be deleted, optional)
-- `assets/img/fm-pol-tables-d.jpg`
-- `assets/img/fm-pol-nursery-d.jpg`
+### Members first (26–27 Nov): the locked view
+On 26 and 27 Nov the Fork Monday prices are for members only. A visitor who is **not signed in** now sees, on every
+Fork Monday card and on the service page:
+- a light panel with **Members price**, the members' price with a gold padlock, "x of y left", "Save $…" and
+  **Sign in or create a profile** (the whole panel links to the sign-up);
+- under it the **Regular price** with its + : the price they can buy at today;
+- pressing + first shows a small note ("Members pay $… · Sign in or create a profile · Continue at $…").
 
-## What changed on the page
-- Hero: the calendar strip glides between 26 and 30 Nov; all five days printed in gold; the ring is drawn round the 30 each time it arrives.
-- Desktop: after the paper lifts, "Fork Monday" stands alone above the strip; on the next scroll the headline and "Save up to $2,500" rise under it.
-- Members band: no ring on the 30; larger, label-shaped "Create my profile" button; "Members get two days…" in Dahlia; date cards as tall as the text beside them.
-- Product cards: regular price struck through by hand in gold, Fork Monday price in navy, both in Dahlia; "Credit", "Tower", "Large" and "Small" labels removed; "x of x left" closer to the name; names and prices aligned on phones.
-- "Birthday Custom Cake" is now "Custom Cake", with "(Birthday, Anniversary, Bridal Shower)" under the name.
-- One Sweet First Year: regular price $1,800, Fork Monday price $1,260.
-- Copy: "Quantities are limited…", How it works steps 1 to 3, Wedding Services subtitle.
-- New photos on 8 cards (above).
+Members see the cards as before (Fork Monday price, regular price struck through).
+
+**What the page needs from the store:**
+1. Set `window.FM_MEMBER = true` for a signed-in member (before `fm-cats.js` runs). Without it the visitor gets the
+   locked view until 28 Nov 00:00 Los Angeles time, after which everyone sees the Fork Monday prices.
+   (`window.FM_GUEST = true/false` forces either view.)
+2. A visitor who is not a member must be **charged the regular price**. The bag in this build still shows the
+   Fork Monday price; the real cart has to apply the right price.
+3. "x of y left" counts the members' price only; buying at the regular price should not take from it.
+4. All "Sign in or create a profile" links point to `#create-profile`: set the real sign-in / sign-up URL.
+
+### Review switch (remove before launch)
+`index.html` and `product-sofreh-aghd.html` start with
+`<script>window.FM_REVIEW=true …</script>`. It shows a small **Visitor: Not a member / Member** switch at the bottom
+left, so the client can review both views. **Delete that line (or set it to false) before the campaign goes live.**
+
+### Other
+- Card names a step larger, across the site.
+- Prices: the regular price in navy; "Add" appears only when the + itself is pointed at.
+- Copy and photos as agreed on 24 Nov (already in your package) are unchanged.

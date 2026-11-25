@@ -29,7 +29,7 @@
   // spots: pips, "x of y left", sold out at this price; the bag cannot take more than is left
   const paint=card=>{ const total=+card.dataset.total, left=+card.dataset.left;
     card.querySelectorAll('.ocard__pips i').forEach((p,i)=>p.classList.toggle('gone',i>=left));
-    const l=card.querySelector('.ocard__left'); if(l) l.textContent=left+' of '+total+' left';
+    card.querySelectorAll('.ocard__left').forEach(l=>l.textContent=left+' of '+total+' left');
     card.classList.toggle('is-sold',left<=0); };
   const cards=[...document.querySelectorAll('.ocard')]; cards.forEach(paint);
   if(window.MDLFBag){
@@ -40,7 +40,56 @@
     cards.forEach(cap); MDLFBag.on(()=>cards.forEach(cap));
   }
 
-  // review only (the preview turns this on): see every card live, low, or sold out
+  /* members first: on 26 and 27 Nov the Fork Monday prices are for members only. A visitor who is not signed in sees
+     the members' price on every card, locked, with the way to create a profile; the regular price is the one they can
+     buy at now. From 28 Nov (Los Angeles time) the lock comes off for everyone.
+     The store sets window.FM_MEMBER = true for a signed-in member (and may set window.FM_GUEST to force either way). */
+  const OPEN_ALL=Date.UTC(2026,10,28,8);   // 28 Nov 2026, 00:00 in Los Angeles
+  const LOCK='<svg class="fmmem__lock" viewBox="0 0 24 30" aria-hidden="true"><path class="sh" d="M6.5 13V8.6a5.5 5.5 0 0 1 11 0V13"/><rect x="2" y="13" width="20" height="15" rx="2.6"/><circle cx="12" cy="19.4" r="1.9"/><path d="M12 21.2v2.6"/></svg>';
+  const money=n=>'$'+n.toLocaleString('en-US'), num=t=>+t.replace(/[^0-9.]/g,'');
+  document.querySelectorAll('.fmcard').forEach(card=>{ const pr=card.querySelector('.fmprice b'), rg=card.querySelector('.fmprice s'), meta=card.querySelector('.card__meta'), info=card.querySelector('.card__info');
+    if(!pr||!rg||!meta) return;
+    const now=pr.textContent.trim(), reg=rg.textContent.trim(), save=money(num(reg)-num(now));
+    // over the regular price: its label (with the piece count, if the product has one)
+    const sz=card.querySelector('.card__spec > .card__m');
+    const lab=document.createElement('span'); lab.className='fmreg'; lab.innerHTML='Regular price'+(sz?'<span class="fmreg__sz"> · '+sz.textContent+'</span>':'');
+    meta.prepend(lab);
+    if(sz){ const z=document.createElement('p'); z.className='fmsz'; z.textContent=sz.textContent; card.querySelector('.card__name').after(z); }
+    // the members' panel: label, spots and saving, the locked price, the way in
+    const m=document.createElement('a'); m.className='fmmem'; m.href='#create-profile';
+    m.setAttribute('aria-label','Members price '+now+', locked. Save '+save+'. Sign in or create a profile');
+    m.innerHTML='<span class="fmmem__lab">Members price</span>'
+      +'<span class="fmmeta"><span class="ocard__left"></span><span class="fmdot" aria-hidden="true">·</span><span class="fmsv">Save '+save+'</span></span>'
+      +'<span class="fmmem__row"><span class="fmmem__p">'+now+'</span>'+LOCK+'</span>'
+      +'<span class="fmmem__sold">Sold out</span>'
+      +'<span class="fmmem__go"><span class="fmgo">Sign in or create a profile</span></span>';
+    meta.after(m);
+    // pressing the regular + first shows what members pay; "Continue" adds it at the regular price
+    const nd=document.createElement('div'); nd.className='fmnudge'; nd.hidden=true; nd.setAttribute('role','dialog'); nd.setAttribute('aria-label','Members price');
+    nd.innerHTML='<p>Members pay '+now+'<small>Save '+save+' with a free profile.</small></p><a href="#create-profile">Sign in or create a profile</a>'
+      +'<button type="button" class="fmnudge__go">Continue at '+reg+'</button><button type="button" class="fmnudge__x" aria-label="Close">&times;</button>';
+    info.appendChild(nd);
+    const add=meta.querySelector('.add--seal');
+    if(add) add.addEventListener('click',e=>{ if(!document.documentElement.classList.contains('fm-guest')||card.dataset.nudged) return;
+      e.preventDefault(); e.stopImmediatePropagation(); nd.hidden=false; nd.querySelector('a').focus({preventScroll:true}); },true);
+    nd.querySelector('.fmnudge__go').addEventListener('click',()=>{ card.dataset.nudged='1'; nd.hidden=true; add&&add.click(); });
+    nd.querySelector('.fmnudge__x').addEventListener('click',()=>{ nd.hidden=true; add&&add.focus({preventScroll:true}); });
+    nd.addEventListener('keydown',e=>{ if(e.key==='Escape'){ nd.hidden=true; add&&add.focus({preventScroll:true}); } });
+  });
+  cards.forEach(paint);
+  // phones have no pointer to rest on the panel: the padlock gives one small shake the first time a card comes into view
+  if('IntersectionObserver' in window && matchMedia('(hover: none)').matches && !reduce.matches){
+    const io=new IntersectionObserver(es=>es.forEach(e=>{ if(!e.isIntersecting||!document.documentElement.classList.contains('fm-guest')) return;
+      io.unobserve(e.target); const l=e.target.querySelector('.fmmem__lock'); if(l){ l.classList.add('is-shake'); l.addEventListener('animationend',()=>l.classList.remove('is-shake'),{once:true}); } }),{threshold:.7});
+    document.querySelectorAll('.fmmem').forEach(m=>io.observe(m));
+  }
+  const guest=()=>window.FM_GUEST!=null?!!window.FM_GUEST:(!window.FM_MEMBER&&Date.now()<OPEN_ALL);
+  const setGuest=g=>document.documentElement.classList.toggle('fm-guest',g);
+  setGuest(guest());
+
+  /* review switches. FM_STATES (design preview only): the stock bar, every card live, low or sold out.
+     FM_REVIEW (set in the page's <head> while the client reviews): the "Not a member / Member" switch, so both views
+     can be seen on the real page. Remove that line, or set it to false, before the campaign goes live. */
   if(window.FM_STATES){
     const orig=cards.map(c=>+c.dataset.total);
     const bar=document.createElement('div'); bar.className='fmstates';
@@ -49,6 +98,16 @@
       cards.forEach((c,i)=>{ const t=orig[i]; c.dataset.left=b.dataset.s==='live'?t:b.dataset.s==='low'?Math.max(1,Math.floor(t/2)):0; paint(c); });
       bar.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x===b))); });
     document.body.appendChild(bar);
+  }
+  if(window.FM_STATES||window.FM_REVIEW){
+    const vb=document.createElement('div'); vb.className='fmstates fmstates--who'+(window.FM_STATES?'':' fmstates--solo');
+    vb.setAttribute('role','group'); vb.setAttribute('aria-label','Preview as');
+    vb.innerHTML='<span>Visitor</span><button type="button" data-g="1">Not a member</button><button type="button" data-g="0">Member</button>';
+    const mark=()=>vb.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(document.documentElement.classList.contains('fm-guest')===(x.dataset.g==='1'))));
+    vb.addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; setGuest(b.dataset.g==='1'); mark();
+      try{ localStorage.setItem('fm-visitor',b.dataset.g==='1'?'guest':'member'); }catch(err){} });
+    let g0=true; try{ g0=localStorage.getItem('fm-visitor')!=='member'; }catch(e){}   // the choice holds from page to page
+    setGuest(g0); mark(); document.body.appendChild(vb);
   }
 })();
 

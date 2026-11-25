@@ -1,0 +1,117 @@
+/* Fork Monday service pages (product-<service>.html). The members' price for members; for a visitor who is not signed
+   in, the same locked panel as the shop cards, and the regular price they can buy at today. */
+.fmpdp__eyebrow{margin:0 0 12px;font:500 9.5px/1 var(--text);letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
+.fmpdp__eyebrow i{font-style:normal;color:var(--ochre-deep);margin-right:9px}
+.fmpp--guest,.fmadd--g{display:none}
+html.fm-guest .fmpp--member,html.fm-guest .fmadd--m{display:none}
+html.fm-guest .fmpp--guest{display:block}
+html.fm-guest .fmadd--g{display:inline}
+/* members */
+.fmpp__prices{display:flex;align-items:baseline;gap:18px;margin:16px 0 0}
+.fmpp__prices b{font:400 32px/1 Dahlia,serif;color:var(--navy)}
+.fmpp__prices s{font:400 24px/1 Dahlia,serif;color:#5B6680;text-decoration:none;padding:0 2px;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 12' preserveAspectRatio='none'%3E%3Cpath d='M2 8.6 C 26 7.4 58 5.8 98 3.4' fill='none' stroke='%23C98B33' stroke-width='2.1' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") center 55%/100% 12px no-repeat}
+.fmpp__meta{display:flex;align-items:center;gap:7px;margin:12px 0 0;font:600 10.5px/1 var(--text);letter-spacing:.18em;text-transform:uppercase;color:#C98B33}
+/* visitor: the locked panel (the shop card's, a size larger) and the regular price */
+.fmmem--pdp{display:flex;flex-direction:column;align-items:flex-start;position:relative;margin:18px 0 0;padding:16px 18px 17px;
+  background:rgba(255,255,255,.55);box-shadow:inset 0 0 0 1px rgba(41,58,87,.14);color:#293A57;text-decoration:none;cursor:pointer;max-width:450px}
+.fmmem--pdp .fmmeta{right:18px;top:16px}
+.fmmem--pdp .fmmem__p{font-size:32px}
+.fmmem--pdp .fmmem__lock{width:21px;height:27px}
+.fmmem--pdp .fmmem__go{font-size:14px;margin-top:11px}
+.fmpp__reg{display:flex;flex-direction:column;gap:9px;margin:18px 0 0}
+.fmpp__reg .fmreg{display:block;font:600 9.5px/1 var(--text);letter-spacing:.22em;text-transform:uppercase;color:#5B6680}
+.fmpp__regp{font:400 26px/1 Dahlia,serif;color:var(--navy)}
+/* the service's details */
+.fmfacts{margin:0;padding:0;border-top:1px solid var(--line)}
+.fmfacts>div{display:grid;grid-template-columns:130px 1fr;gap:16px;padding:13px 0;border-bottom:1px solid var(--line)}
+.fmfacts dt{font-size:9.5px;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);padding-top:3px}
+.fmfacts dd{margin:0;font-size:13.5px;line-height:1.55;font-weight:300}
+/* sold out at the Fork Monday price */
+.fmsoldnote{display:none;margin:14px 0 0;font-size:12px;letter-spacing:.04em;color:var(--muted)}
+.fmbuyc.is-sold .fmpp__prices b{color:var(--muted)}
+html:not(.fm-guest) .fmbuyc.is-sold .act2,html:not(.fm-guest) .fmbuyc.is-sold .inbag{display:none}
+html:not(.fm-guest) .fmbuyc.is-sold .fmsoldnote{display:block}
+html.fm-guest .fmbuyc.is-sold .fmmem--pdp{cursor:default}
+html.fm-guest .fmbuyc.is-sold .fmmem--pdp .fmmem__row,html.fm-guest .fmbuyc.is-sold .fmmem--pdp .fmmem__go,html.fm-guest .fmbuyc.is-sold .fmmem--pdp .fmmeta{display:none}
+html.fm-guest .fmbuyc.is-sold .fmmem--pdp .fmmem__sold{display:block}
+/* the note before buying at the regular price */
+.fmnudge--pdp{position:absolute;left:0;right:0;bottom:0;z-index:5;display:flex;flex-direction:column;align-items:flex-start;gap:12px;
+  padding:20px 22px 19px;background:#F6EFEA;box-shadow:0 8px 30px rgba(41,58,87,.16);color:#293A57}
+.fmnudge--pdp[hidden]{display:none}
+.fmnudge--pdp p{font-size:26px}
+/* how Fork Monday works, in place of the shipping row */
+.fmsteps .service__item{align-items:flex-start}
+.fmsteps__n{flex:none;font:400 30px/1 Dahlia,serif;color:var(--ochre-deep);width:24px}
+@media (max-width:900px){
+  .fmpp__prices b,.fmmem--pdp .fmmem__p{font-size:28px}
+  .fmmem--pdp{padding:13px 14px 14px;max-width:none}
+  .fmmem--pdp .fmmeta{position:absolute;right:14px;top:13px;flex-direction:column;align-items:flex-end;gap:5px}
+  .fmmem--pdp .fmmeta>span{font-size:10px;letter-spacing:.16em}
+  .fmmem--pdp .fmmeta .fmdot{display:none}
+  .fmmem--pdp .fmmem__go{font-size:13px}
+  .fmfacts>div{grid-template-columns:1fr;gap:6px}
+}
+/* related cards: the shop card's own spacing, so the members' panel and the + sit as they do on the shop */
+.fmpdp .products--4 .fmcard .card__info{padding:14px 76px 18px 18px}
+@media (max-width:900px){ .fmpdp .products--4 .fmcard .card__info{padding:16px 14px 16px 14px} }
+/* v2: the members' panel stands off the page (clearer white, firmer line), its words on the page's left edge,
+   and both prices at one size */
+.fmmem--pdp{background:rgba(255,255,255,.78);box-shadow:inset 0 0 0 1px rgba(41,58,87,.2);margin:18px 0 0 -18px;max-width:468px}
+.fmmem--pdp .fmmem__p,.fmpp__regp{font-size:28px}
+.fmpp__reg{margin-top:20px}
+@media (max-width:900px){ .fmmem--pdp{margin-left:-14px;margin-right:-14px} .fmmem--pdp .fmmem__p,.fmpp__regp,.fmpp__prices b{font-size:26px} }
+.fmmem--pdp .fmmem__lock{width:23px;height:29px;top:2px}
+@media (max-width:900px){ .fmmem--pdp .fmmem__lock{width:21px;height:26.5px;top:1.8px} }
+.fmpp__meta{letter-spacing:0}
+.fmpp__meta{letter-spacing:.18em}
+.fmpp__meta>span:last-child{letter-spacing:0}
+.fmpp__meta{letter-spacing:0}
+.fmpp__meta .ocard__left{letter-spacing:.18em}
+/* the spots and the saving, a size larger on the product page (there is room) */
+.fmmem--pdp .fmmeta{gap:7px}
+.fmmem--pdp .fmmeta>span,.fmpp__meta{font-size:13px}
+.fmmem--pdp .fmmeta>.ocard__left{letter-spacing:.18em!important;margin-right:-.18em}
+@media (max-width:900px){ .fmmem--pdp .fmmeta>span{font-size:11.5px} }
+/* the visitor's view a size up on the product page, to the scale of the page (title 46px) */
+.fmmem--pdp{padding:20px 22px 21px;margin-left:-22px;max-width:480px}
+.fmmem--pdp .fmmeta{right:22px;top:20px}
+.fmmem--pdp .fmmem__lab,.fmpp__reg .fmreg{font-size:11px}
+.fmmem--pdp .fmmem__row{margin-top:12px}
+.fmmem--pdp .fmmem__p,.fmpp__regp{font-size:34px}
+.fmmem--pdp .fmmem__lock{width:26px;height:33px;top:2.4px}
+.fmmem--pdp .fmmem__go{font-size:15.5px;margin-top:13px}
+.fmpp__reg{gap:12px;margin-top:24px}
+@media (max-width:900px){
+  .fmmem--pdp{padding:15px 14px 16px;margin-left:-14px}
+  .fmmem--pdp .fmmeta{right:14px;top:15px}
+  .fmmem--pdp .fmmem__lab,.fmpp__reg .fmreg{font-size:10px}
+  .fmmem--pdp .fmmem__p,.fmpp__regp{font-size:29px}
+  .fmmem--pdp .fmmem__lock{width:22px;height:28px;top:2px}
+  .fmmem--pdp .fmmem__go{font-size:14px}
+}
+/* both views another step up on the product page */
+.fmpp__prices{gap:22px;margin-top:20px}
+.fmpp__prices b{font-size:42px}
+.fmpp__prices s{font-size:30px;background-size:100% 14px}
+.fmpp__meta{font-size:14px;margin-top:14px;gap:9px}
+.fmmem--pdp{padding:22px 24px 23px;margin-left:-24px;max-width:500px}
+.fmmem--pdp .fmmeta{right:24px;top:22px;gap:8px}
+.fmmem--pdp .fmmeta>span{font-size:14px}
+.fmmem--pdp .fmmem__lab,.fmpp__reg .fmreg{font-size:12px}
+.fmmem--pdp .fmmem__row{margin-top:14px}
+.fmmem--pdp .fmmem__p,.fmpp__regp{font-size:40px}
+.fmmem--pdp .fmmem__lock{width:30px;height:38px;top:2.8px}
+.fmmem--pdp .fmmem__go{font-size:16.5px;margin-top:14px}
+.fmpp__reg{gap:13px;margin-top:26px}
+@media (max-width:900px){
+  .fmpp__prices b{font-size:34px} .fmpp__prices s{font-size:25px}
+  .fmpp__meta{font-size:12px}
+  .fmmem--pdp{padding:16px 15px 17px;margin-left:-15px}
+  .fmmem--pdp .fmmeta{right:15px;top:16px}
+  .fmmem--pdp .fmmeta>span{font-size:12px}
+  .fmmem--pdp .fmmem__lab,.fmpp__reg .fmreg{font-size:10.5px}
+  .fmmem--pdp .fmmem__p,.fmpp__regp{font-size:33px}
+  .fmmem--pdp .fmmem__lock{width:25px;height:31px;top:2.3px}
+  .fmmem--pdp .fmmem__go{font-size:14.5px}
+}
